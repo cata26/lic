@@ -23,9 +23,9 @@ require "mail.php";
 				$email = $_POST['email'];
 				//validate email
 				if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-					$error[] = "Please enter a valid email";
+					$error[] = "Te rogăm introdu un email valid";
 				}elseif(!valid_email($email)){
-					$error[] = "That email was not found";
+					$error[] = "Email-ul nu a fost găsit";
 				}else{
 
 					$_SESSION['forgot']['email'] = $email;
@@ -40,7 +40,7 @@ require "mail.php";
 				$code = $_POST['code'];
 				$result = is_code_correct($code);
 
-				if($result == "the code is correct"){
+				if($result == "Codul este incorect"){
 
 					$_SESSION['forgot']['code'] = $code;
 					header("Location: forgot.php?mode=enter_password");
@@ -56,7 +56,7 @@ require "mail.php";
 				$password2 = $_POST['password2'];
 
 				if($password !== $password2){
-					$error[] = "Passwords do not match";
+					$error[] = "Parola nu se potrivește";
 				}elseif(!isset($_SESSION['forgot']['email']) || !isset($_SESSION['forgot']['code'])){
 					header("Location: forgot.php");
 					die;
@@ -90,7 +90,7 @@ require "mail.php";
 		mysqli_query($con,$query);
 
 		//send email here
-		send_mail($email,'Password reset',"Your code is " . $code);
+		send_mail($email,'Resetare parola!',"Codul tau este " . $code);
 	}
 	
 	function save_password($password){
@@ -138,16 +138,16 @@ require "mail.php";
 				$row = mysqli_fetch_assoc($result);
 				if($row['expire'] > $expire){
 
-					return "the code is correct";
+					return "Codul este corect";
 				}else{
-					return "the code is expired";
+					return "Codul este expirat";
 				}
 			}else{
-				return "the code is incorrect";
+				return "Codul este incorect";
 			}
 		}
 
-		return "the code is incorrect";
+		return "Codul este incorect";
 	}
 
 	
@@ -157,7 +157,7 @@ require "mail.php";
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Forgot</title>
+	<title>Am uitat parola!</title>
 	<link rel="stylesheet" type="text/css" href="style4.css">
 	<link rel="icon" href="upt.png" type="image/x-icon">
 </head>
@@ -168,9 +168,9 @@ require "mail.php";
 				case 'enter_email':
 					// code...
 					?>
-						<form method="post" action="forgot.php?mode=enter_email"> 
-							<h1>Forgot Password</h1>
-							<h3>Enter your email below</h3>
+						<form method="post" action="forgot.php?mode=enter_email">
+							<h1>Am uitat parola</h1><br>
+							<h3>Te rugăm să introduci adresa de email</h3>
 							<span style="font-size: 12px;color:red;">
 							<?php 
 								foreach ($error as $err) {
@@ -181,7 +181,6 @@ require "mail.php";
 							</span>
 							<input class="textbox" type="email" name="email" placeholder="Email"><br>
 							<button type="submit" value="Next">Send</button>
-							<br><br>
 							<div><a href="login.php">Anulează</a></div>
 						</form>
 					<?php				
@@ -191,8 +190,8 @@ require "mail.php";
 					// code...
 					?>
 						<form method="post" action="forgot.php?mode=enter_code"> 
-							<h1>Forgot Password</h1>
-							<h3>Enter your the code sent to your email</h3>
+							<h1>Am uitat parola</h1>
+							<h3>Te rugăm să introduci codul</h3>
 							<span style="font-size: 12px;color:red;">
 							<?php 
 								foreach ($error as $err) {
@@ -204,10 +203,6 @@ require "mail.php";
 
 							<input class="textbox" type="text" name="code" placeholder="12345"><br>
 							<button type="submit" value="Next">Send</button>
-							<a href="forgot.php">
-								<button type="button" value="Start Over">Back</button>
-							</a>
-							<br><br>
 							<div><a href="login.php">Anulează</a></div>
 						</form>
 					<?php
@@ -218,7 +213,7 @@ require "mail.php";
 					?>
 						<form method="post" action="forgot.php?mode=enter_password"> 
 							<h1>Forgot Password</h1>
-							<h3>Enter your new password</h3>
+							<h3>Te rugăm să introduci noua parolă</h3>
 							<span style="font-size: 12px;color:red;">
 							<?php 
 								foreach ($error as $err) {
@@ -231,10 +226,6 @@ require "mail.php";
 							<input class="textbox" type="text" name="password" placeholder="Password"><br>
 							<input class="textbox" type="text" name="password2" placeholder="Retype Password"><br>
 							<button type="submit" value="Next">Send</button>
-							<a href="forgot.php">
-							<button type="button" value="Start Over">Back</button>
-							</a>
-							<br><br>
 							<div><a href="login.php">Anulează</a></div>
 						</form>
 					<?php

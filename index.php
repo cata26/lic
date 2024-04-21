@@ -15,8 +15,8 @@
         <?php } ?>
         <input type="text" name="email" placeholder="Email">
         <input type="password" name="password" placeholder="Password"><br>
-        <button type="submit">Conectare</button>
-        <div><a href="forgot.php">Ai uitat parola?</a></div>
+        <button type="submit">Conectare</button><br><br>
+        <a href="forgot.php">Ai uitat parola?</a>
     </form>
     <p class="mt-5 mb-3 text-muted">Universitatea Politehnica Timișoara | 2024</p>
 </body>

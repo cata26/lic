@@ -61,12 +61,11 @@ function determineRedirectLocation($email) {
     
     if (strpos($email, $student_domain) !== false) {
         return "student.php";
-    } elseif (strpos($email, $g_domain) !== false) {
-        return "student.php";
     } elseif (strpos($email, $secretar_domain) !== false) {
         return "secretar.php";
     } elseif (strpos($email, $admin_domain) !== false) {
         return "admin.php";
+    
     } else {
         // Dacă domeniul nu este recunoscut, trimite utilizatorul înapoi la pagina de login cu un mesaj de eroare
         header("Location: index.php?error=Invalid email domain");

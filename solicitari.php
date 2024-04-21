@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style2.css">
+    <meta charset="UTF-8">
+    <title>Eliberare documente</title>
 </head>
 <body>
-    <div class="form-container">
-        <h1>Eliberare documente</h1>
-        <form>
-            <label for="document">Vă rugăm să alegeți documentul pe care doriți să-l primiți:</label>
-            <select name="document" id="document">
-                <option value="">Alegeti document</option>
-                <option value="document1">Adeverinta student</option>
-                <option value="document2">Foaie matricola</option>
-                <!-- Adăugați alte opțiuni aici -->
-            </select>
-            <br>
-            <br>
-            <label for="necesitate">Motivul solicitarii documentului:</label>
-            <select name="necesitate" id="necesitate">
-                <option value="">Alegeti motivul din lista</option>
-                <option value="n1">Locul de munca</option>
-                <option value="n2">Asigurare de sanatate</option>
-                <option value="n2">Banca</option>
-                <!-- Adăugați alte opțiuni aici -->
-            </select>
-            <br>
-            <br>
-            <button type="submit" class="btn">Trimite</button>
-        </form>
-    </div>
+
+<form action="generate_pdf.php" method="post">
+    <h1>Eliberare documente</h1>
+    <p>Vă rugăm să alegeți documentul pe care doriți să-l primiți:</p>
+    <select name="document_type">
+        <option value="adeverinta_student">Adeverință student</option>
+        <option value="adeverinta_student">Foaie matricola</option>
+        <!-- Alte opțiuni pot fi adăugate aici -->
+    </select>
+    
+    <p>Motivul solicitării documentului:</p>
+    <select name="document_reason">
+        <option value="locul_de_munca">Locul de muncă</option>
+        <option value="asigurare_de_sanatate">Asigurare de sanatate</option>
+        <option value="banca">Banca</option>
+        <!-- Alte motive pot fi adăugate aici -->
+    </select>
+    <br><br>
+
+    <input type="submit" value="Trimite">
+</form>
 
 </body>
 </html>
