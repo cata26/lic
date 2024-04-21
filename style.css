@@ -1,11 +1,20 @@
+:root {
+    --main-color: #0f4470;
+    --main-light-color: #9fc5e8;
+    --container-color: #cfe2f3;
+    --text-color: #1a1d22;
+    --bg-color: #0f4470;
+  }
+  
 body {
-    background-image: #f6fcfa;
+    background-image: #b3d3f4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
 }
+
 
 * {
     font-family: cursive;
@@ -14,15 +23,18 @@ body {
 
 form {
     width: 500px;
-    border: 3px solid rgb(0, 0, 0);
-    padding: 20px;
-    background: #0f4470;
+    border: 3px solid #ffffff;
+    padding: 50px;
+    background: #ffffff;
     border-radius: 20px;
 }
+
 
 h2 {
     text-align: center;
     margin-bottom: 40px;
+    font-size: 38px;
+    
 }
 
 input {
@@ -63,23 +75,24 @@ button:hover {
     margin: 20px auto;
 }
 
+
 h1 {
     text-align: center;
-    color: rgb(134, 3, 3);
+    color: rgb(0, 0, 0);
 }
 
 a {
-    float: right;
-    background: rgb(41, 174, 200);
+    float: left;
+    background: rgb(14, 160, 217);
     padding: 10px 15px;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-right: 10px;
     border: none;
-    text-decoration: none;
 }
 
 a:hover {
     opacity: .7;
+    background-color: #5661dd; 
 }
 

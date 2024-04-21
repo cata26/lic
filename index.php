@@ -7,18 +7,18 @@
 </head>
 
 <body>
+<img class="mb-4" src="loginlogo.png" alt="logo" width="700">
     <form action="login.php" method="post">
-    <img class="mb-4" src="upt.png" alt="logo" width="200">
         <h2>Autentificare</h2>
         <?php if(isset($_GET['error'])) { ?>
             <p class="error"><?php echo $_GET['error']; ?></p>
         <?php } ?>
-        <label>Email</label>
-        <input type="text" name="email" placeholder="Email"><br>
-        <label>Password</label>
+        <input type="text" name="email" placeholder="Email">
         <input type="password" name="password" placeholder="Password"><br>
-        <button type="submit">Login</button>
+        <button type="submit">Conectare</button>
+        <div><a href="forgot.php">Ai uitat parola?</a></div>
     </form>
     <p class="mt-5 mb-3 text-muted">Universitatea Politehnica Timișoara | 2024</p>
 </body>
 </html>
+
