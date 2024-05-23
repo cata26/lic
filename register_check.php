@@ -2,7 +2,7 @@
 session_start(); 
 include "db_conn.php";
 
-if (isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year']) && isset($_POST['password'])) {
+if (isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year'])&& isset($_POST['facultate'])&& isset($_POST['sectia'])&& isset($_POST['tip_invatamant']) && isset($_POST['password'])) {
 
     function validate($data){
         $data = trim($data);
@@ -15,12 +15,15 @@ if (isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) &&
     $email = validate($_POST['email']);
     $name = validate($_POST['name']);
     $year = validate($_POST['year']);
+    $facultate = validate($_POST['facultate']);
+    $sectia = validate($_POST['sectia']);
+    $tip_invatamant = validate($_POST['tip_invatamant']);
     $pass = validate($_POST['password']);
 
     $user_data = 'uname='. $uname. '&email='. $email. '&name='. $name;
 
     if (empty($uname) || empty($email) || empty($name)  || empty($pass)) {
-        header("Location: register.php?error=All fields are required&$user_data");
+        header("Location: register.php?error=Câmpurile marcate cu steluță sunt obligatorii!&$user_data");
         exit();
     } else {
 
@@ -34,7 +37,7 @@ if (isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) &&
             header("Location: register.php?error=The username or email is taken, try another&$user_data");
             exit();
         } else {
-            $sql2 = "INSERT INTO users(user_name, email, name, year, password) VALUES('$uname', '$email', '$name', '$year', '$pass')";
+            $sql2 = "INSERT INTO users(user_name, email, name, year,facultate,sectia,tip_invatamant, password) VALUES('$uname', '$email', '$name', '$year','$facultate','$sectia','$tip_invatamant', '$pass')";
             $result2 = mysqli_query($conn, $sql2);
 
             if ($result2) {

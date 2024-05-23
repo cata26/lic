@@ -4,240 +4,208 @@ $error = array();
 
 require "mail.php";
 
-	if(!$con = mysqli_connect("localhost","root","","login_db")){
+if (!$con = mysqli_connect("localhost", "root", "", "login_db")) {
+    die("could not connect");
+}
 
-		die("could not connect");
-	}
+$mode = "enter_email";
+if (isset($_GET['mode'])) {
+    $mode = $_GET['mode'];
+}
 
-	$mode = "enter_email";
-	if(isset($_GET['mode'])){
-		$mode = $_GET['mode'];
-	}
+// something is posted
+if (count($_POST) > 0) {
+    switch ($mode) {
+        case 'enter_email':
+            $email = $_POST['email'];
+            // validate email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error[] = "Te rogăm introdu un email valid";
+            } elseif (!valid_email($email)) {
+                $error[] = "Email-ul nu a fost găsit";
+            } else {
+                $_SESSION['forgot']['email'] = $email;
+                send_email($email);
+                header("Location: forgot.php?mode=enter_code");
+                die;
+            }
+            break;
 
-	//something is posted
-	if(count($_POST) > 0){
+        case 'enter_code':
+            $code = $_POST['code'];
+            $result = is_code_correct($code);
 
-		switch ($mode) {
-			case 'enter_email':
-				// code...
-				$email = $_POST['email'];
-				//validate email
-				if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-					$error[] = "Te rogăm introdu un email valid";
-				}elseif(!valid_email($email)){
-					$error[] = "Email-ul nu a fost găsit";
-				}else{
+            if ($result === "Codul este corect") {
+                $_SESSION['forgot']['code'] = $code;
+                header("Location: forgot.php?mode=enter_password");
+                die;
+            } else {
+                $error[] = $result;
+            }
+            break;
 
-					$_SESSION['forgot']['email'] = $email;
-					send_email($email);
-					header("Location: forgot.php?mode=enter_code");
-					die;
-				}
-				break;
+        case 'enter_password':
+            $password = $_POST['password'];
+            $password2 = $_POST['password2'];
 
-			case 'enter_code':
-				// code...
-				$code = $_POST['code'];
-				$result = is_code_correct($code);
+            if ($password !== $password2) {
+                $error[] = "Parola nu se potrivește";
+            } elseif (!isset($_SESSION['forgot']['email']) || !isset($_SESSION['forgot']['code'])) {
+                header("Location: forgot.php");
+                die;
+            } else {
+                save_password($password);
+                if (isset($_SESSION['forgot'])) {
+                    unset($_SESSION['forgot']);
+                }
 
-				if($result == "Codul este incorect"){
+                header("Location: login.php");
+                die;
+            }
+            break;
 
-					$_SESSION['forgot']['code'] = $code;
-					header("Location: forgot.php?mode=enter_password");
-					die;
-				}else{
-					$error[] = $result;
-				}
-				break;
+        default:
+            break;
+    }
+}
 
-			case 'enter_password':
-				// code...
-				$password = $_POST['password'];
-				$password2 = $_POST['password2'];
+function send_email($email) {
+    global $con;
 
-				if($password !== $password2){
-					$error[] = "Parola nu se potrivește";
-				}elseif(!isset($_SESSION['forgot']['email']) || !isset($_SESSION['forgot']['code'])){
-					header("Location: forgot.php");
-					die;
-				}else{
-					
-					save_password($password);
-					if(isset($_SESSION['forgot'])){
-						unset($_SESSION['forgot']);
-					}
+    $expire = time() + (60 * 15); // Codul expiră în 15 minute
+    $code = rand(10000, 99999);
+    $email = addslashes($email);
 
-					header("Location: login.php");
-					die;
-				}
-				break;
-			
-			default:
-				// code...
-				break;
-		}
-	}
+    $query = "INSERT INTO codes (email, code, expire) VALUES ('$email', '$code', '$expire')";
+    mysqli_query($con, $query);
 
-	function send_email($email){
-		
-		global $con;
+    // Trimite emailul cu codul de resetare
+    send_mail($email, 'Resetare parola!', "Codul tau este " . $code);
+}
 
-		$expire = time() + (60 * 1);
-		$code = rand(10000,99999);
-		$email = addslashes($email);
+function save_password($password) {
+    global $con;
 
-		$query = "insert into codes (email,code,expire) value ('$email','$code','$expire')";
-		mysqli_query($con,$query);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $email = addslashes($_SESSION['forgot']['email']);
 
-		//send email here
-		send_mail($email,'Resetare parola!',"Codul tau este " . $code);
-	}
-	
-	function save_password($password){
-		
-		global $con;
+    $query = "UPDATE users SET password = '$password' WHERE email = '$email' LIMIT 1";
+    mysqli_query($con, $query);
+}
 
-		$password = password_hash($password, PASSWORD_DEFAULT);
-		$email = addslashes($_SESSION['forgot']['email']);
+function valid_email($email) {
+    global $con;
 
-		$query = "update users set password = '$password' where email = '$email' limit 1";
-		mysqli_query($con,$query);
+    $email = addslashes($email);
 
-	}
-	
-	function valid_email($email){
-		global $con;
+    $query = "SELECT * FROM users WHERE email = '$email' LIMIT 1";        
+    $result = mysqli_query($con, $query);
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        }
+    }
 
-		$email = addslashes($email);
+    return false;
+}
 
-		$query = "select * from users where email = '$email' limit 1";		
-		$result = mysqli_query($con,$query);
-		if($result){
-			if(mysqli_num_rows($result) > 0)
-			{
-				return true;
- 			}
-		}
+function is_code_correct($code) {
+    global $con;
 
-		return false;
+    $code = addslashes($code);
+    $expire = time();
+    $email = addslashes($_SESSION['forgot']['email']);
 
-	}
+    $query = "SELECT * FROM codes WHERE code = '$code' AND email = '$email' ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($con, $query);
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            if ($row['expire'] > $expire) {
+                return "Codul este corect";
+            } else {
+                return "Codul este expirat";
+            }
+        } else {
+            return "Codul este incorect";
+        }
+    }
 
-	function is_code_correct($code){
-		global $con;
-
-		$code = addslashes($code);
-		$expire = time();
-		$email = addslashes($_SESSION['forgot']['email']);
-
-		$query = "select * from codes where code = '$code' && email = '$email' order by id desc limit 1";
-		$result = mysqli_query($con,$query);
-		if($result){
-			if(mysqli_num_rows($result) > 0)
-			{
-				$row = mysqli_fetch_assoc($result);
-				if($row['expire'] > $expire){
-
-					return "Codul este corect";
-				}else{
-					return "Codul este expirat";
-				}
-			}else{
-				return "Codul este incorect";
-			}
-		}
-
-		return "Codul este incorect";
-	}
-
-	
+    return "Codul este incorect";
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>Am uitat parola!</title>
-	<link rel="stylesheet" type="text/css" href="style4.css">
-	<link rel="icon" href="upt.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <title>Am uitat parola!</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" href="upt.png" type="image/x-icon">
 </head>
 <body>
-		<?php 
+    <?php 
+        switch ($mode) {
+            case 'enter_email':
+                ?>
+                <form method="post" action="forgot.php?mode=enter_email">
+                    <h1>Am uitat parola</h1><br>
+                    <h3>Te rugăm să introduci adresa de email</h3>
+                    <span style="font-size: 12px;color:red;">
+                    <?php 
+                        foreach ($error as $err) {
+                            echo $err . "<br>";
+                        }
+                    ?>
+                    </span>
+                    <input class="textbox" type="email" name="email" placeholder="Email"><br>
+                    <button type="submit" value="Next">Send</button>
+                    <div><a href="login.php">Anulează</a></div>
+                </form>
+                <?php                
+                break;
 
-			switch ($mode) {
-				case 'enter_email':
-					// code...
-					?>
-						<form method="post" action="forgot.php?mode=enter_email">
-							<h1>Am uitat parola</h1><br>
-							<h3>Te rugăm să introduci adresa de email</h3>
-							<span style="font-size: 12px;color:red;">
-							<?php 
-								foreach ($error as $err) {
-									// code...
-									echo $err . "<br>";
-								}
-							?>
-							</span>
-							<input class="textbox" type="email" name="email" placeholder="Email"><br>
-							<button type="submit" value="Next">Send</button>
-							<div><a href="login.php">Anulează</a></div>
-						</form>
-					<?php				
-					break;
+            case 'enter_code':
+                ?>
+                <form method="post" action="forgot.php?mode=enter_code"> 
+                    <h1>Am uitat parola</h1>
+                    <h3>Te rugăm să introduci codul</h3>
+                    <span style="font-size: 12px;color:red;">
+                    <?php 
+                        foreach ($error as $err) {
+                            echo $err . "<br>";
+                        }
+                    ?>
+                    </span>
 
-				case 'enter_code':
-					// code...
-					?>
-						<form method="post" action="forgot.php?mode=enter_code"> 
-							<h1>Am uitat parola</h1>
-							<h3>Te rugăm să introduci codul</h3>
-							<span style="font-size: 12px;color:red;">
-							<?php 
-								foreach ($error as $err) {
-									// code...
-									echo $err . "<br>";
-								}
-							?>
-							</span>
+                    <input class="textbox" type="text" name="code" placeholder="12345"><br>
+                    <button type="submit" value="Next">Send</button>
+                    <div><a href="login.php">Anulează</a></div>
+                </form>
+                <?php
+                break;
 
-							<input class="textbox" type="text" name="code" placeholder="12345"><br>
-							<button type="submit" value="Next">Send</button>
-							<div><a href="login.php">Anulează</a></div>
-						</form>
-					<?php
-					break;
+            case 'enter_password':
+                ?>
+                <form method="post" action="forgot.php?mode=enter_password"> 
+                    <h1>Forgot Password</h1>
+                    <h3>Te rugăm să introduci noua parolă</h3>
+                    <span style="font-size: 12px;color:red;">
+                    <?php 
+                        foreach ($error as $err) {
+                            echo $err . "<br>";
+                        }
+                    ?>
+                    </span>
 
-				case 'enter_password':
-					// code...
-					?>
-						<form method="post" action="forgot.php?mode=enter_password"> 
-							<h1>Forgot Password</h1>
-							<h3>Te rugăm să introduci noua parolă</h3>
-							<span style="font-size: 12px;color:red;">
-							<?php 
-								foreach ($error as $err) {
-									// code...
-									echo $err . "<br>";
-								}
-							?>
-							</span>
-
-							<input class="textbox" type="text" name="password" placeholder="Password"><br>
-							<input class="textbox" type="text" name="password2" placeholder="Retype Password"><br>
-							<button type="submit" value="Next">Send</button>
-							<div><a href="login.php">Anulează</a></div>
-						</form>
-					<?php
-					break;
-				
-				default:
-					// code...
-					break;
-			}
-
-		?>
-
-
+                    <input class="textbox" type="password" name="password" placeholder="Password"><br>
+                    <input class="textbox" type="password" name="password2" placeholder="Retype Password"><br>
+                    <button type="submit" value="Next">Send</button>
+                    <div><a href="login.php">Anulează</a></div>
+                </form>
+                <?php
+                break;
+        }
+    ?>
 </body>
 </html>

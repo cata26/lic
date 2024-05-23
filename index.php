@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Autentificare Secretariat UPT</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="icon" href="upt.png" type="image/x-icon">
 </head>
 

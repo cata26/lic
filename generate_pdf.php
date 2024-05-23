@@ -1,88 +1,59 @@
 <?php
-// Include Composer's autoloader
-require_once 'vendor/autoload.php';
+include "db_conn.php";
+require_once('vendor/tecnickcom/tcpdf/tcpdf.php');
 
-// Include TCPDF library (if not installed via Composer)
-// require_once 'path/to/tcpdf.php';
+$nr_matricol = isset($_POST['nr_matricol']) ? $conn->real_escape_string($_POST['nr_matricol']) : '';
+$document_type = isset($_POST['document_type']) ? $conn->real_escape_string($_POST['document_type']) : '';
+$document_reason = isset($_POST['document_reason']) ? $conn->real_escape_string($_POST['document_reason']) : '';
 
-// Date de conectare la baza de date
-$dbHost = 'localhost';
-$dbName = 'login_db';
-$dbUser = 'root';
-$dbPass = '';
 
-// Id-ul utilizatorului pentru care se generează PDF-ul
-$userId = 1; // Acest ID ar trebui să fie furnizat dinamic, de exemplu prin $_GET sau $_POST
+if (!$nr_matricol || !$document_type || !$document_reason) {
+    die("Toate câmpurile sunt obligatorii.");
+} 
 
-try {
-    $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$sql = "SELECT name, year, facultate, sectia, tip_invatamant FROM users WHERE nr_matricol = '$nr_matricol'";
+$result = mysqli_query($conn, $sql);
 
-    // Interogarea care face join între tabelele 'users' și 'documents'
-    $stmt = $pdo->prepare("
-        SELECT users.user_name, users.email, documents.tip_document, documents.data
-        FROM users
-        JOIN documents ON users.id = documents.id_user
-        WHERE users.id = :userId
-    ");
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $name = $row['name'];
+  
+    $pdf = new TCPDF();
+    $pdf->AddPage();
     
-    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-    $stmt->execute();
-
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($results) {
-        // Inițializăm TCPDF
-        $pdf = new TCPDF();
-
-        // Setări document
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Admin');
-        $pdf->SetTitle('Raport Documente Utilizator');
-        $pdf->SetSubject('Raport');
-        
-        // Adaugă o pagină
-        $pdf->AddPage();
-
-        // Construim HTML-ul pentru PDF
-        $html = '<h1>Raport Documente</h1>';
-        $html .= '<h2>Detalii Utilizator</h2>';
-        $html .= '<ul>';
-        
-        // Adăugăm detaliile utilizatorului - presupunând că avem doar un rând pentru utilizator
-        $user = $results[0]; // Presupunem că toate documentele aparțin aceluiași utilizator
-        $html .= '<li>Nume: ' . htmlspecialchars($user['name']) . '</li>';
-        $html .= '<li>Email: ' . htmlspecialchars($user['email']) . '</li>';
-        $html .= '</ul>';
-
-        // Adăugăm detalii despre documente
-        $html .= '<h2>Documente</h2>';
-        $html .= '<table border="1" cellpadding="4">';
-        $html .= '<thead><tr><th>Titlu</th><th>Data Creării</th></tr></thead>';
-        $html .= '<tbody>';
-        
-        foreach ($results as $row) {
-            $html .= '<tr>';
-            $html .= '<td>' . htmlspecialchars($row['tip_document']) . '</td>';
-            $html .= '<td>' . htmlspecialchars($row['data']) . '</td>';
-            $html .= '</tr>';
-        }
-        
-        $html .= '</tbody>';
-        $html .= '</table>';
-
-        // Scriem HTML-ul în PDF
-        $pdf->writeHTML($html, true, false, true, false, '');
-
-        // Încheiem și trimitem PDF-ul la browser
-        $pdf->Output('user_documents.pdf', 'I');
-    } else {
-        echo "Nu există documente pentru utilizatorul specificat.";
+    // Încărcare template HTML
+    $html = file_get_contents('adeverinta_student.html');
+    
+    // Înlocuire placeholder-uri cu date reale
+    $placeholders = [
+        '{{name}}' => $row['name'],
+        '{{year}}' => $row['year'],
+        '{{facultate}}' => $row['facultate'],
+        '{{sectia}}' => $row['sectia'],
+        '{{tip}}' => $row['tip_invatamant'],
+        '{{document_type}}' => $document_type,
+        '{{document_reason}}' => $document_reason
+    ];
+    foreach ($placeholders as $key => $value) {
+        $html = str_replace($key, htmlspecialchars($value), $html);
     }
-} catch (PDOException $e) {
-    echo "Eroare la conectarea la baza de date: " . $e->getMessage();
-}
 
-// Închidem conexiunea la baza de date
-$pdo = null;
+    // Scrie HTML-ul în PDF
+    $pdf->writeHTML($html, true, false, true, false, '');
+    
+    // Definește calea absolută către directorul 'pdf'
+    $pdf_dir = __DIR__ . '/pdf/';
+    $current_date = date('Ymd');
+    $pdf_file_path = $pdf_dir . 'Adeverinta_' . $name . '_'.$current_date. '.pdf';
+
+    // Verifică și creează folderul pdf dacă nu există
+    if (!file_exists($pdf_dir)) {
+        mkdir($pdf_dir, 0777, true);
+    }
+
+    // Salvare PDF pe server în folderul 'pdf'
+    $pdf->Output($pdf_file_path, 'F');
+
+ 
+}
 ?>
