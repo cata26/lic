@@ -1,0 +1,187 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+:root {
+    --main-color: #0f4470;
+    --main-light-color: #9fc5e8;
+    --container-color: #cfe2f3;
+    --text-color: #1a1d22;
+    --bg-color: #0f4470;
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--main-color);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidebar-header {
+    padding: 15px;
+    background: var(--main-color);
+    color: #fff;
+    text-align: center;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    padding: 10px;
+    padding-left: 30px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+}
+
+.sidebar-menu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #1462ac;
+}
+
+.user-navbar {
+    position: fixed;
+    top: 0;
+    left: 250px; /* Start from the right edge of the sidebar */
+    width: calc(100% - 250px); /* Full width minus sidebar width */
+    height: 50px;
+    background-color: #0f4470;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align content to the right */
+    padding-right: 20px; /* Padding for the right side */
+    box-sizing: border-box;
+    z-index: 1; /* Ensure it stays on top */
+}
+
+.toggle-dropdown {
+    display: none;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.username i {
+    margin-left: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 50px; /* Position directly below the username */
+    right: 20px; /* Align to the right of the username */
+    background-color: #f9f9f9;
+    width: 200px; /* Set the width to be compact */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    flex-direction: column;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.toggle-dropdown:checked ~ .dropdown-content {
+    display: flex;
+}
+
+.content {
+    margin-left: 250px; /* Width of the sidebar */
+    padding: 20px;
+    padding-top: 70px; /* Additional padding to prevent content from being hidden under the user navbar */
+}
+
+body {
+    background-color: #f6fcfa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+* {
+    font-family: cursive;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: var(--main-light-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    padding: 2px 4px;
+    font-size: 14px;
+    background: var(--main-light-color);
+    color: var(--bg-color);
+    font-weight: 400;
+    border-radius: 0.5rem;
+}
+
+.btn:hover {
+    background: #fff;
+}
+
+.home-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.home-text h1 {
+    font-size: 2.4rem;
+}
+
+.home-text p {
+    font-size: 0.938rem;
+    margin: 0.5rem 0 1.4rem;
+}

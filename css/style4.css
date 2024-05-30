@@ -1,0 +1,89 @@
+:root {
+  --main-color: #0f4470;
+  --main-light-color: #9fc5e8;
+  --container-color: #cfe2f3;
+  --text-color: #1a1d22;
+  --bg-color: #0f4470;
+  --bg--white: #ffffff;
+
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg--white);
+  margin: 0;
+  padding: 20px;
+}
+
+.user-container {
+  background-color: var(--main-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 250px;
+}
+
+.user-container h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.dropdown {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.dropbtn {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centrăm elementele pe verticală */
+  justify-content: start; /* Aliniem conținutul la stânga */
+  width: 20px; /* Lățimea imaginii tale */
+  height: 20px; /* Înălțimea imaginii tale */
+  background-color: var(--main-color); /* Culoarea fundalului butonului */
+  color: white; /* Culoarea textului */
+  padding: 20px; /* Spatiul în interiorul butonului */
+  border-radius: 5px; /* Colțuri rotunjite pentru buton */
+  outline: none; /* Elimină conturul atunci când butonul este focalizat */
+}
+
+.dropbtn img {
+  width: 20px; /* Lățimea imaginii tale */
+  height: 20px; /* Înălțimea imaginii tale */
+  margin-left: 50px; /* Spațiu între text și săgeată */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  margin-top: 2px;
+}
+
+.dropdown-content a {
+  color: var(--text-color);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--main-light-color);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

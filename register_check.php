@@ -2,54 +2,60 @@
 session_start(); 
 include "db_conn.php";
 
-if (isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year'])&& isset($_POST['facultate'])&& isset($_POST['sectia'])&& isset($_POST['tip_invatamant']) && isset($_POST['password'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year']) && isset($_POST['facultate']) && isset($_POST['sectia']) && isset($_POST['tip_invatamant']) && isset($_POST['password'])) {
 
-    function validate($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+        function validate($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
 
-    $uname = validate($_POST['uname']);
-    $email = validate($_POST['email']);
-    $name = validate($_POST['name']);
-    $year = validate($_POST['year']);
-    $facultate = validate($_POST['facultate']);
-    $sectia = validate($_POST['sectia']);
-    $tip_invatamant = validate($_POST['tip_invatamant']);
-    $pass = validate($_POST['password']);
+        $nr_matricol = validate($_POST['nr_matricol']);
+        $uname = validate($_POST['uname']);
+        $email = validate($_POST['email']);
+        $name = validate($_POST['name']);
+        $year = validate($_POST['year']);
+        $facultate = validate($_POST['facultate']);
+        $sectia = validate($_POST['sectia']);
+        $tip_invatamant = validate($_POST['tip_invatamant']);
+        $pass = validate($_POST['password']);
 
-    $user_data = 'uname='. $uname. '&email='. $email. '&name='. $name;
-
-    if (empty($uname) || empty($email) || empty($name)  || empty($pass)) {
-        header("Location: register.php?error=Câmpurile marcate cu steluță sunt obligatorii!&$user_data");
-        exit();
-    } else {
-
-        // hashing the password
-        $pass = password_hash($pass, PASSWORD_DEFAULT);
-
-        $sql = "SELECT * FROM users WHERE user_name='$uname' OR email='$email'";
-        $result = mysqli_query($conn, $sql);
-
-        if (mysqli_num_rows($result) > 0) {
-            header("Location: register.php?error=The username or email is taken, try another&$user_data");
-            exit();
+        if ( empty($uname) || empty($email) || empty($name) || empty($pass)) {
+            $_SESSION['error'] = "Câmpurile marcate cu steluță sunt obligatorii!";
         } else {
-            $sql2 = "INSERT INTO users(user_name, email, name, year,facultate,sectia,tip_invatamant, password) VALUES('$uname', '$email', '$name', '$year','$facultate','$sectia','$tip_invatamant', '$pass')";
-            $result2 = mysqli_query($conn, $sql2);
+            // Hashing the password
+            $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-            if ($result2) {
-                header("Location: register.php?success=Your account has been created successfully");
-                exit();
+            $sql = "SELECT * FROM users WHERE user_name=? OR email=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $uname, $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $_SESSION['error'] = "Numele de utilizator sau email-ul sunt deja folosite. Încearcă altceva!";
             } else {
-                header("Location: register.php?error=Unknown error occurred&$user_data");
-                exit();
+                $sql2 = "INSERT INTO users(nr_matricol, user_name, email, name, year, facultate, sectia, tip_invatamant, password) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt2 = $conn->prepare($sql2);
+                $stmt2->bind_param("sssssssss", $nr_matricol, $uname, $email, $name, $year, $facultate, $sectia, $tip_invatamant, $pass);
+
+                if ($stmt2->execute()) {
+                    $_SESSION['success'] = "Contul a fost creat cu succes!";
+                } else {
+                    $_SESSION['error'] = "A apărut o eroare necunoscută.";
+                }
             }
         }
+        header("Location: admin.php?page=register");
+        exit();
+    } else {
+        $_SESSION['error'] = "Toate câmpurile sunt obligatorii.";
+        header("Location: admin.php?page=register");
+        exit();
     }
 } else {
-    header("Location: register.php");
+    header("Location: admin.php?page=register");
     exit();
 }

@@ -56,6 +56,7 @@ function determineRedirectLocation($email) {
     $student_domain = "@student.upt.ro";
     $secretar_domain = "@cs.upt.ro";
     $admin_domain = "@admin.upt.ro";
+    $profesor_domain = "@upt.ro";
     
     if (strpos($email, $student_domain) !== false) {
         return "student.php";
@@ -63,7 +64,8 @@ function determineRedirectLocation($email) {
         return "secretar.php";
     } elseif (strpos($email, $admin_domain) !== false) {
         return "admin.php";
-    
+    } elseif (strpos($email, $profesor_domain) !== false) {
+        return "profesor.php";
     } else {
        
         header("Location: index.php?error=Invalid email domain");

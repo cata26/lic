@@ -1,0 +1,84 @@
+:root {
+    --main-color: #0f4470;
+    --main-light-color: #9fc5e8;
+    --container-color: #cfe2f3;
+    --text-color: #1a1d22;
+    --bg-color: #0f4470;
+  }
+
+  body {
+    background-image: #b3d3f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+* {
+    font-family: cursive;
+    box-sizing: border-box;
+}
+
+form {
+    width: 500px;
+    border: 3px solid #ffffff;
+    padding: 50px;
+    background: #ffffff;
+    border-radius: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input[type="button"] {
+    background-color: var(--bg-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+input[type="submit"] {
+    background-color: var(--bg-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.error {
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 10px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-align: center;
+}
