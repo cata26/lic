@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.profile-container {
+    max-width: 1000px; /* Dimensiunea containerului a fost mărită */
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px; /* Padding mărit pentru spațiu suplimentar */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 30px;
+    color: var(--main-light-color);
+}
+
+
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-info-column {
+    flex: 1;
+    padding: 0 30px; /* Padding mărit între coloane */
+}
+
+.profile-info-column p {
+    font-size: 20px; /* Dimensiune font mărită */
+    margin: 15px 0; /* Margin mărită între paragrafe */
+}
+
+.profile-info-column p strong {
+    font-size: 22px; /* Dimensiune font mărită pentru titluri */
+    color: #333;
+}

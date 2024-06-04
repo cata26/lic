@@ -16,29 +16,22 @@ function send_mail($recipient,$subject,$message)
   $mail->SMTPSecure = "tls";
   $mail->Port       = 587;
   $mail->Host       = "smtp.office365.com";
-  //$mail->Host       = "smtp.mail.yahoo.com";
-  $mail->Username   = "catalina.mindrut@student.upt.ro";
+  $mail->Username   = "secretariat_upt@outlook.com";
   $mail->Password   = "Min26mihaela2001#";
 
   $mail->IsHTML(true);
   $mail->AddAddress($recipient, "esteemed customer");
-  $mail->SetFrom("catalina.mindrut@student.upt.ro", "Secretariat UPT");
-  //$mail->AddReplyTo("reply-to-email", "reply-to-name");
-  //$mail->AddCC("cc-recipient-email", "cc-recipient-name");
+  $mail->SetFrom("secretariat_upt@outlook.com", "Secretariat UPT");
+
   $mail->Subject = $subject;
   $content = $message;
 
   $mail->MsgHTML($content); 
   if(!$mail->Send()) {
-    //echo "Error while sending Email.";
-    //echo "<pre>";
-    //var_dump($mail);
     return false;
   } else {
-    //echo "Email sent successfully";
     return true;
   }
 
 }
-
 ?>

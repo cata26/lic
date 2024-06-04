@@ -13,17 +13,19 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/friconix@2.4.0/css/friconix.min.css">
     </head>
     <body>
-<nav class="sidebar">
-    <div class="sidebar-header">
-    <img class="mb-4" src="logo.png" alt="logo" width="200">
+        
+    <div class="user-navbar">
+        <input type="checkbox" id="toggle-dropdown" class="toggle-dropdown">
+        <label for="toggle-dropdown" class="username">
+            <?php echo $_SESSION['name']; ?> <i class="fas fa-angle-down"></i>
+        </label>
+        <div class="dropdown-content">
+            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
+            <a href="forgot.php"><i class="fa fa-key" aria-hidden="true"></i> Resetarea parolei</a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Delogare</a>
+        </div>
     </div>
-    <ul class="sidebar-menu">
-    <li><a href="admin.php?page=main"         class="main-button"><i class="fas fa-home"></i> Pagina principală</a></li><br>    
-    <li><a href="admin.php?page=register"     class="register-button"><i class="fas fa-user"></i> Creare conturi </a></li><br>
-    <li><a href="admin.php?page=list_st"      class="list-button"><i class="fas fa-list"></i> Listă studenți</a></li><br>
-    <li><a href="logout.php"                  class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a><li>
-    </ul>
-</nav>
+
 
 <div class="content">
     <?php

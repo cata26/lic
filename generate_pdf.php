@@ -4,12 +4,30 @@ include "db_conn.php";
 require_once('vendor/tecnickcom/tcpdf/tcpdf.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nr_matricol = isset($_POST['nr_matricol']) ? $conn->real_escape_string($_POST['nr_matricol']) : '';
-    $document_type = isset($_POST['document_type']) ? $conn->real_escape_string($_POST['document_type']) : '';
+    if (isset($_SESSION['user_name'])) {
+        $username = $_SESSION['user_name'];
+
+      // Preluarea detaliilor studentului din baza de date
+      $sql = "SELECT nr_matricol, name, year, facultate, sectia, tip_invatamant FROM users WHERE user_name = ?";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("s", $username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nr_matricol = $row['nr_matricol'];
+        $name = $row['name'];
+        $year = $row['year'];
+        $facultate = $row['facultate'];
+        $sectia = $row['sectia'];
+        $tip_invatamant = $row['tip_invatamant'];
+
+
     $document_reason = isset($_POST['document_reason']) ? $conn->real_escape_string($_POST['document_reason']) : '';
 
-    if (!$nr_matricol || !$document_type || !$document_reason) {
-        $_SESSION['error'] = "Toate câmpurile sunt obligatorii.";
+    if (!$document_reason) {
+        $_SESSION['error'] = "Câmpul e obligatoriu.";
     } else {
         $sql = "SELECT name, year, facultate, sectia, tip_invatamant FROM users WHERE nr_matricol = '$nr_matricol'";
         $result = mysqli_query($conn, $sql);
@@ -59,7 +77,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    header("Location: student.php?page=solicitari");
+    header("Location: student.php?page=adv");
     exit();
+   }else {
+        $_SESSION['error'] = "Numele de utilizator nu este disponibil în sesiune.";
+    }
+   }
 }
+
 ?>

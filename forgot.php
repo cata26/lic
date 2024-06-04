@@ -149,7 +149,7 @@ function is_code_correct($code) {
             case 'enter_email':
                 ?>
                 <form method="post" action="forgot.php?mode=enter_email">
-                    <h1>Am uitat parola</h1><br>
+                    <h1>Resetare parolă</h1><br>
                     <h3>Te rugăm să introduci adresa de email</h3>
                     <span style="font-size: 12px;color:red;">
                     <?php 
