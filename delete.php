@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     $nr_matricol = $_POST['delete_id'];
 
     // Pregătește declarația SQL pentru a preveni SQL injection
-    $sql = "DELETE FROM users WHERE nr_matricol = ?";
+    $sql = "DELETE FROM users_1 WHERE nr_matricol = ?";
     $stmt = $conn->prepare($sql);
     
     if ($stmt === false) {

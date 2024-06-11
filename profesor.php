@@ -14,24 +14,39 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+
+<div class="user-navbar">
+        <input type="checkbox" id="toggle-dropdown" class="toggle-dropdown">
+        <label for="toggle-dropdown" class="username">
+            <?php echo $_SESSION['name']; ?>
+        </label>
+       <!-- <div class="dropdown-content">
+            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
+            <a href="forgot.php"><i class="fa fa-key" aria-hidden="true"></i> Resetarea parolei</a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Delogare</a>
+        </div>-->
+</div>
+
 <nav class="sidebar">
     <div class="sidebar-header">
     <img class="mb-4" src="logo.png" alt="logo" width="200">
     </div>
     <ul class="sidebar-menu">
-        <li><a href="profesor.php?page=main"            class="main-button"><i class="fas fa-home"></i> Pagina principală</a></li><br>
-        <li><a href="profesor.php?page=list_st"         class="list-button"><i class="fas fa-list"></i> Listă studenți</a></li><br>
-        <li><a href="student.php?page=doc"        class="doc-button"><i class="fas fa-file"></i> Documente</a></li><br>
-        <li><a href="profesor.php?page=anunturi"        class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a></li><br>
-        <li><a href="logout.php"                        class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a><li>
+        <li><a href="profesor.php?page=main_profesor"        class="main-button"><i class="fas fa-home"></i> Pagina principală</a></li><br>
+        <li><a href="profesor.php?page=list_st_prof"         class="list-button"><i class="fas fa-list"></i> Listă studenți</a></li><br>
+        <li><a href="profesor.php?page=solicitari_prof"      class="list-button"><i class="fas fa-clipboard"></i> Solicitari</a></li><br>
+        <li><a href="profesor.php?page=doc_prof"             class="doc-button"><i class="fas fa-file"></i> Documente</a></li><br>
+        <li><a href="profesor.php?page=anunturi_prof"        class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a></li><br>
+        <li><a href="profesor.php?page=raport_prof"          class="raport-button"><i class="fas fa-clipboard"></i> Raportare probleme</a></li><br>
+        <li><a href="logout.php"                             class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a><li>
     </ul>
     
 </nav>
 <div class="content">
 <?php
-    $defaultPage = 'main'; 
+    $defaultPage = 'main_profesor'; 
     $page = isset($_GET['page']) ? $_GET['page'] : $defaultPage; 
-    $allowed_pages = ['main','list_st', 'anunturi', 'calendar'];
+    $allowed_pages = ['main_profesor','doc_prof','solicitari_prof','list_st_prof', 'anunturi_prof','raport_prof', 'calendar'];
 
     if (in_array($page, $allowed_pages) && file_exists($page . '.php')) {
         include($page . '.php');

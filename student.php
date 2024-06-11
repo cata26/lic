@@ -24,23 +24,22 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
             <li><a href="student.php?page=solicitari"     class="sol-button"><i class="fas fa-clipboard"></i> Solicitări</a></li><br>
             <li><a href="student.php?page=doc"            class="doc-button"><i class="fas fa-file"></i> Documente</a></li><br>
             <li><a href="student.php?page=prog"           class="prog-button"><i class="fas fa-calendar-check"></i> Progrămari</a></li><br>
-            <li><a href="student.php?page=upload_burse"   class="burse-button"><i class="fas fa-file"></i> Burse sociale</a></li><br>
             <li><a href="student.php?page=anunturi_stud"  class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a></li><br>
             <li><a href="student.php?page=raport"         class="raport-button"><i class="fas fa-clipboard"></i> Raportare probleme</a></li><br>
             <li><a href="logout.php"                      class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a></li>
         </ul>
     </nav>
 
-    <div class="user-navbar">    
+       <div class="user-navbar">    
         <input type="checkbox" id="toggle-dropdown" class="toggle-dropdown">
         <label for="toggle-dropdown" class="username">
-            <?php echo $_SESSION['name']; ?> <i class="fas fa-angle-down"></i>
+            <?php echo $_SESSION['name']; ?></i>
         </label>
-        <div class="dropdown-content">
+        <!--<div class="dropdown-content">
             <a href="student.php?page=profil" class ="profil-button"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
             <a href="forgot.php"><i class="fa fa-key" aria-hidden="true"></i> Resetarea parolei</a>
             <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Delogare</a>
-        </div>
+        </div>-->
     </div>
 
     <div class="content">

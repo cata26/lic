@@ -23,10 +23,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         <li><a href="secretar.php?page=solicitari_secretar" class="sol-button"><i class="fas fa-clipboard"></i> Solicitări</a></li><br>
         <li><a href="secretar.php?page=doc_secretar"        class="doc-button"><i class="fas fa-file"></i> Documente</a></li><br>
         <li><a href="secretar.php?page=form_inc"            class="incarcare-button"><i class="fas fa-upload"></i> Încarcare documente</a></li><br>
-        <li><a href="secretar.php?page=list_st"             class="list-button"><i class="fas fa-list"></i> Listă studenți</a></li><br>
+        <li><a href="secretar.php?page=list_st_prof"        class="list-button"><i class="fas fa-list"></i> Listă studenți</a></li><br>
         <li><a href="secretar.php?page=lista_prog"          class="prog-button"><i class="fas fa-calendar-check"></i> Progrămari</a></li><br>
         <li><a href="secretar.php?page=news"                class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a></li><br>
-        <li><a href="secretar.php?page=view_doc"            class="view-button"><i class="fas fa-newspaper"></i> Dosare bursa</a></li><br>
         <li><a href="secretar.php?page=rec"                 class="view-button"><i class="fas fa-clipboard"></i> Reclamații</a></li><br>
         <li><a href="logout.php"                            class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a><li>
     </ul>
@@ -36,20 +35,20 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 <div class="user-navbar">
         <input type="checkbox" id="toggle-dropdown" class="toggle-dropdown">
         <label for="toggle-dropdown" class="username">
-            <?php echo $_SESSION['name']; ?> <i class="fas fa-angle-down"></i>
+            <?php echo $_SESSION['name']; ?>
         </label>
-        <div class="dropdown-content">
+        <!--<div class="dropdown-content">
             <a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
             <a href="forgot.php"><i class="fa fa-key" aria-hidden="true"></i> Resetarea parolei</a>
             <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Delogare</a>
-        </div>
+        </div>-->
     </div>
 
 <div class="content">
 <?php
     $defaultPage = 'main_sec'; 
     $page = isset($_GET['page']) ? $_GET['page'] : $defaultPage; 
-    $allowed_pages = ['main_sec','solicitari_secretar', 'doc_secretar','form_inc','list_st', 'lista_prog', 'news','view_doc','rec', 'calendar'];
+    $allowed_pages = ['main_sec','solicitari_secretar', 'doc_secretar','form_inc','list_st_prof', 'lista_prog', 'news','view_doc','rec'];
 
     if (in_array($page, $allowed_pages) && file_exists($page . '.php')) {
         include($page . '.php');

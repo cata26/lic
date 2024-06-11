@@ -26,7 +26,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             exit();
         }
 
-        $sql = "SELECT * FROM users WHERE email='$email'";
+        $sql = "SELECT * FROM users_1 WHERE email='$email'";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result);
@@ -34,15 +34,16 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 $_SESSION['user_name'] = $row['user_name'];
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['id'] = $row['id'];
-                $redirect_location = determineRedirectLocation($email);
-                header("Location: $redirect_location");
+                $_SESSION['rol'] = $row['rol'];
+                $location = determineLocation($row['rol']);
+                header("Location: $location");
                 exit();
             } else {
-                header("Location: index.php?error=Incorrect Username or Password");
+                header("Location: index.php?error=Incorrect Email or Password");
                 exit();
             }
         } else {
-            header("Location: index.php?error=Incorrect Username or Password");
+            header("Location: index.php?error=Incorrect Email or Password");
             exit();
         }
     }
@@ -51,25 +52,19 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     exit();
 }
 
-function determineRedirectLocation($email) {
-
-    $student_domain = "@student.upt.ro";
-    $secretar_domain = "@cs.upt.ro";
-    $admin_domain = "@admin.upt.ro";
-    $profesor_domain = "@upt.ro";
-    
-    if (strpos($email, $student_domain) !== false) {
-        return "student.php";
-    } elseif (strpos($email, $secretar_domain) !== false) {
-        return "secretar.php";
-    } elseif (strpos($email, $admin_domain) !== false) {
-        return "admin.php";
-    } elseif (strpos($email, $profesor_domain) !== false) {
-        return "profesor.php";
-    } else {
-       
-        header("Location: index.php?error=Invalid email domain");
-        exit();
+function determineLocation($rol) {
+    switch ($rol) {
+        case 'student':
+            return "student.php";
+        case 'secretar':
+            return "secretar.php";
+        case 'admin':
+            return "admin.php";
+        case 'profesor':
+            return "profesor.php";
+        default:
+            header("Location: index.php?error=Invalid role");
+            exit();
     }
 }
 ?>

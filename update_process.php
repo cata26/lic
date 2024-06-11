@@ -2,7 +2,7 @@
 session_start();
 include "db_conn.php";
 
-if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year']) && isset($_POST['facultate']) && isset($_POST['sectia']) && isset($_POST['tip_invatamant'])) {
+if (isset($_POST['nr_matricol']) && isset($_POST['rol']) && isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year']) && isset($_POST['facultate']) && isset($_POST['sectia']) && isset($_POST['tip_invatamant'])) {
 
     function validate($data) {
         $data = trim($data);
@@ -19,15 +19,16 @@ if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['emai
     $facultate = validate($_POST['facultate']);
     $sectia = validate($_POST['sectia']);
     $tip_invatamant = validate($_POST['tip_invatamant']);
+    $rol = validate($_POST['rol']);
 
-    if (empty($uname) || empty($email) || empty($name) || empty($year) || empty($facultate) || empty($sectia) || empty($tip_invatamant)) {
+    if (empty($uname) || empty($email) || empty($name) || empty($year) || empty($facultate) || empty($sectia) || empty($tip_invatamant) ||empty($rol)) {
         $_SESSION['error'] = "Toate câmpurile sunt obligatorii.";
-        header("Location: update_user.php?nr_matricol=" . $nr_matricol);
+        header("Location: update.php?nr_matricol=" . $nr_matricol);
         exit();
     } else {
-        $sql = "UPDATE users SET user_name=?, email=?, name=?, year=?, facultate=?, sectia=?, tip_invatamant=? WHERE nr_matricol=?";
+        $sql = "UPDATE users_1 SET rol=?,user_name=?, email=?, name=?, year=?, facultate=?, sectia=?, tip_invatamant=? WHERE nr_matricol=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $uname, $email, $name, $year, $facultate, $sectia, $tip_invatamant, $nr_matricol);
+        $stmt->bind_param("sssssssss", $uname, $email, $name, $year, $facultate, $sectia, $tip_invatamant, $nr_matricol, $rol);
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "Utilizatorul a fost actualizat cu succes!";

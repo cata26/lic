@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_SESSION['user_name'];
 
         // Preluarea detaliilor studentului din baza de date
-        $sql = "SELECT nr_matricol, name, year, facultate, sectia, tip_invatamant FROM users WHERE user_name = ?";
+        $sql = "SELECT nr_matricol, name, year, facultate, sectia, tip_invatamant FROM users_1 WHERE user_name = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $username);
         $stmt->execute();

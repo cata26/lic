@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_SESSION['user_name'];
 
         // Preluarea detaliilor studentului din baza de date
-        $sql = "SELECT name, facultate FROM users_1 WHERE user_name = ?";
+        $sql = "SELECT nr_matricol, name FROM users_1 WHERE user_name = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -15,27 +15,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
+            $nr_matricol = $row['nr_matricol'];
             $name = $row['name'];
-            $facultate = $row['facultate'];
 
             // Preluarea datelor din formular
-            $documment_type = $conn->real_escape_string($_POST['document_type']);
+            $problema = $conn->real_escape_string($_POST['problema']);
+           
 
-
-            $sql = "INSERT INTO solicitari (name,facultate, document_type) VALUES (?,?, ?)";
+            // Salvarea programării în baza de date
+            $sql = "INSERT INTO raport ( name,problema) VALUES (?,?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss",$name, $facultate, $documment_type);
+            $stmt->bind_param("ss",$name, $problema);
 
             if ($stmt->execute()) {
-                $_SESSION['success'] = "Solicitarea a fost salvată cu succes.";
+                $_SESSION['success'] = "Problema a fost raportată cu succes.";
             } else {
-                $_SESSION['error'] = "A apărut o eroare la salvarea solicitării: " . $stmt->error;
+                $_SESSION['error'] = "A apărut o eroare la raportarea problemei: " . $stmt->error;
             }
 
         } else {
             $_SESSION['error'] = "Nu s-au găsit detalii pentru utilizatorul specificat.";
         }
-        header("Location: student.php?page=solicitari");
+        header("Location: profesor.php?page=raport_prof");
         exit();
         
     } else {

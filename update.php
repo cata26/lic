@@ -6,7 +6,7 @@ if (isset($_GET['nr_matricol'])) {
     $nr_matricol = $_GET['nr_matricol'];
 
     // Preia informațiile utilizatorului din baza de date
-    $sql = "SELECT * FROM users WHERE nr_matricol = ?";
+    $sql = "SELECT * FROM users_1 WHERE nr_matricol = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $nr_matricol);
     $stmt->execute();
@@ -39,8 +39,11 @@ if (isset($_GET['nr_matricol'])) {
         <h2>Actualizează Utilizator</h2>
         <input type="hidden" name="nr_matricol" value="<?php echo htmlspecialchars($row['nr_matricol']); ?>">
 
+        <label>Rol</label>
+        <input type="text" name="rol" value="<?php echo htmlspecialchars($row['rol']); ?>" placeholder="Rol"><br>
+        
         <label>User Name</label>
-        <input type="text" name="uname" value="<?php echo htmlspecialchars($row['user_name']); ?>" placeholder="User Name"><br>
+        <input type="text" name="uname" value="<?php echo htmlspecialchars($row['user_name']); ?>" placeholder="Username"><br>
 
         <label>Email</label>
         <input type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" placeholder="Email"><br>
@@ -49,7 +52,7 @@ if (isset($_GET['nr_matricol'])) {
         <input type="text" name="name" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Name"><br>
 
         <label>Year</label>
-        <input type="number" name="year" value="<?php echo htmlspecialchars($row['year']); ?>" placeholder="Year"><br>
+        <input type="number" name="year" value="<?php echo htmlspecialchars($row['year']); ?>" placeholder="An"><br>
 
         <label>Facultate</label>
         <input type="text" name="facultate" value="<?php echo htmlspecialchars($row['facultate']); ?>" placeholder="Facultate"><br>
@@ -59,6 +62,7 @@ if (isset($_GET['nr_matricol'])) {
 
         <label>Tip învățământ</label>
         <input type="text" name="tip_invatamant" value="<?php echo htmlspecialchars($row['tip_invatamant']); ?>" placeholder="Tip învățământ"><br>
+
 
         <button type="submit">Actualizează</button>
         <button type="back">Înapoi</button>

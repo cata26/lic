@@ -27,7 +27,7 @@ if (isset($_SESSION['user_name'])) {
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Secretar</title>
+    <title>Dashboard Profesor</title>
     <link rel="stylesheet" href="css/style14.css">
 </head>
 <body>
@@ -38,7 +38,7 @@ if (isset($_SESSION['user_name'])) {
         </div>
         <div class="profile-info box">
             <h2>Informații</h2>
-            <p><strong>Secretar</p>
+            <p><strong>Profesor</p>
             <p><strong>Facultate:</strong> <?php echo htmlspecialchars($user['facultate']); ?></p>
         </div>
         <div class="columns">
@@ -58,13 +58,10 @@ if (isset($_SESSION['user_name'])) {
             <div class="column box">
                 <h2>Servicii</h2>
                 <div class="service-container">
-                <a href="secretar.php?page=solicitari"      class="sol-button"><i class="fas fa-clipboard"></i> Solicitări</a>
-                <a href="secretar.php?page=doc_secretar"    class="doc-button"><i class="fas fa-file"></i> Documente</a>
-                <a href="secretar.php?page=form_inc"        class="incarcare-button"><i class="fas fa-upload"></i> Încarcare documente</a>
-                <a href="secretar.php?page=list_st_prof"         class="list-button"><i class="fas fa-list"></i> Listă studenți</a>
-                <a href="secretar.php?page=lista_prog"      class="prog-button"><i class="fas fa-calendar-check"></i> Progrămari</a>
-                <a href="secretar.php?page=news"            class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a>
-                <a href="secretar.php?page=rec"             class="view-button"><i class="fas fa-clipboard"></i> Reclamații</a>
+                <a href="profesor.php?page=list_st_prof"        class="list-button"><i class="fas fa-list"></i> Listă studenți</a>
+                <a href="profesor.php?page=solicitari_prof"     class="list-button"><i class="fas fa-clipboard"></i> Solicitari</a>
+                <a href="student.php?page=doc_prof"             class="doc-button"><i class="fas fa-file"></i> Documente</a>
+                <a href="profesor.php?page=anunturi"            class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a>
                 </div>
             </div>
         </div>

@@ -2,18 +2,18 @@
 session_start();
 include "db_conn.php";  // Include scriptul de conectare la baza de date
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
-    $nr_matricol = $_POST['delete_id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_i'])) {
+    $data_programarii = $_POST['delete_i'];
 
     // Pregătește declarația SQL pentru a preveni SQL injection
-    $sql = "DELETE FROM prog WHERE nr_matricol = ?";
+    $sql = "DELETE FROM prog WHERE data_prog = ?";
     $stmt = $conn->prepare($sql);
     
     if ($stmt === false) {
         die("Eroare la pregătirea interogării SQL: " . $conn->error);
     }
     
-    $stmt->bind_param("s", $nr_matricol);
+    $stmt->bind_param("s", $data_programarii);
 
     if ($stmt->execute()) {
         $_SESSION['success'] = "Programarea a fost șters cu succes.";
@@ -24,6 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     $stmt->close();
 }
 
-header("Location: secretar.php?page=list_prog");
+header("Location: secretar.php?page=lista_prog");
 exit();
 ?>

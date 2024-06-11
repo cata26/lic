@@ -113,17 +113,17 @@ $total_pages = ceil($total_records / $records_per_page);
     <div class="pagination">
         <?php
         if ($page > 1) {
-            echo '<a href="student.php?page=doc&p=' . ($page - 1) . '">&laquo; Anterior</a>';
+            echo '<a href="profesor.php?page=doc_prof&p=' . ($page - 1) . '">&laquo; Anterior</a>';
         }
         for ($i = 1; $i <= $total_pages; $i++) {
             if ($i == $page) {
-                echo '<a href="student.php?page=doc&p=' . $i . '" class="active">' . $i . '</a>';
+                echo '<a href="profesor.php?page=doc_prof&p=' . $i . '" class="active">' . $i . '</a>';
             } else {
-                echo '<a href="student.php?page=doc&p=' . $i . '">' . $i . '</a>';
+                echo '<a href="profesor.php?page=doc_prof&p=' . $i . '">' . $i . '</a>';
             }
         }
         if ($page < $total_pages) {
-            echo '<a href="student.php?page=doc&p=' . ($page + 1) . '">Următor &raquo;</a>';
+            echo '<a href="profesor.php?page=doc_prof&p=' . ($page + 1) . '">Următor &raquo;</a>';
         }
         ?>
     </div>

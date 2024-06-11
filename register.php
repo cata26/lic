@@ -46,6 +46,9 @@
 
                 <label>Password*</label>
                 <input type="password" name="password" placeholder="Password"><br>
+
+                <label>Grad</label>
+                <input type="text" name="grad" placeholder="Grad"><br>
             </div>
         </div> 
 

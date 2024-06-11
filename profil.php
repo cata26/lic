@@ -5,7 +5,7 @@ include "db_conn.php";
 if (isset($_SESSION['user_name'])) {
     $username = $_SESSION['user_name'];
 
-    $sql = "SELECT * FROM users WHERE user_name = ?";
+    $sql = "SELECT * FROM users_1 WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();

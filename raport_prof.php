@@ -8,8 +8,8 @@
 </head>
 <body>
 
-<form action="generate_pdf.php" method="post">
-    <h1>Adeverință student</h1>
+<form action="raport_prob_prof.php" method="post">
+    <h1>Raportare probleme</h1>
     <?php 
         if (isset($_SESSION['error'])) { ?>
             <p class="error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
@@ -18,19 +18,9 @@
         <?php if (isset($_SESSION['success'])) { ?>
             <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
         <?php } ?>
+    <p>Decrieți problema:</p>
+    <input type="text" name="problema" id="problema" required>
     
-    <p>Motivul solicitării documentului:</p>
-    <select name="document_reason" id="document_reason" required>
-        <option value="">Alegeti motivul din lista</option>
-        <option value="locul de munca">locul de muncă</option>
-        <option value="angajare">angajare</option>
-        <option value="asigurare de sanatate">asigurare de sanatate</option>
-        <option value="banca">banca</option>
-        <option value="alocatie europena">alocatie europeana</option>
-        <option value="text"></option>
-    </select>
-    <br><br>
-
     <button type="submit">Trimite</button>
 </form>
 

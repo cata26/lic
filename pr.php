@@ -25,7 +25,7 @@ if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['emai
         header("Location: update_user.php?nr_matricol=" . $nr_matricol);
         exit();
     } else {
-        $sql = "UPDATE users SET user_name=?, email=?, name=?, year=?, facultate=?, sectia=?, tip_invatamant=? WHERE nr_matricol=?";
+        $sql = "UPDATE users_1 SET user_name=?, email=?, name=?, year=?, facultate=?, sectia=?, tip_invatamant=? WHERE nr_matricol=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssssss", $uname, $email, $name, $year, $facultate, $sectia, $tip_invatamant, $nr_matricol);
 

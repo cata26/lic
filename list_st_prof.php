@@ -1,3 +1,7 @@
+<?php
+include "db_conn.php";  
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,30 +35,26 @@
 <div class="container mt-4">
     <?php 
     if (isset($_SESSION['error'])) { ?>
-        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?></>
+        <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
     <?php } ?>
 
     <?php if (isset($_SESSION['success'])) { ?>
-        <?php echo $_SESSION['success']; unset($_SESSION['success']); ?></>
+        <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
     <?php } ?>
     <h2>Lista Studenți</h2>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Număr Matricol</a></th>
-                <th><a href="?page=list_st&p=<?php echo $page; ?>&sort=name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Nume</a></th>
-                <th>Username</a></th>
-                <th>Email</a></th>
-                <th></th>
+                <th><a href="?page=list_st_prog&p=<?php echo $page; ?>&sort=nr_matricol&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Număr Matricol</a></th>
+                <th><a href="?page=list_st_prog&p=<?php echo $page; ?>&sort=name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Nume</a></th>
+                <th><a href="?page=list_st_prog&p=<?php echo $page; ?>&sort=user_name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Username</a></th>
+                <th><a href="?page=list_st_prog&p=<?php echo $page; ?>&sort=email&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Email</a></th>
             </tr>
         </thead>
         <tbody>
         <?php
-        include "db_conn.php";  
 
-        // Numărul de înregistrări pe pagină
         $records_per_page = 10;
-        
         // Determinarea paginii curente
         $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
         $offset = ($page - 1) * $records_per_page;
@@ -82,17 +82,6 @@
                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['user_name']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                echo "<td>
-                        <form method='post' action='delete.php' style='display:inline-block;'>
-                            <input type='hidden' name='delete_id' value='" . htmlspecialchars($row['nr_matricol']) . "'>
-                            <button type='submit' class='btn btn-danger btn-sm'>Șterge</button>
-                        </form>
-                        <form style='display:inline;' method='get' action='update.php'>
-                            <input type='hidden' name='nr_matricol' value='" . htmlspecialchars($row['nr_matricol']) . "'>
-                            <button type='submit' class='btn btn-primary btn-sm'>Actualizează</button>
-                        </form>
-                      </td>";
-                echo "</tr>";
             }
         } else {
             echo "<tr><td colspan='5'>Nu există studenți în baza de date.</td></tr>";
@@ -105,17 +94,17 @@
     <div class="pagination">
         <?php
         if ($page > 1) {
-            echo '<a href="admin.php?page=list_st&p=' . ($page - 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">&laquo; Anterior</a>';
+            echo '<a href="profesor.php?page=list_st_prof&p=' . ($page - 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">&laquo; Anterior</a>';
         }
         for ($i = 1; $i <= $total_pages; $i++) {
             if ($i == $page) {
-                echo '<a href="admin.php?page=list_st&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '" class="active">' . $i . '</a>';
+                echo '<a href="profesor.php?page=list_st_prof&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '" class="active">' . $i . '</a>';
             } else {
-                echo '<a href="admin.php?page=list_st&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">' . $i . '</a>';
+                echo '<a href="profesor.php?page=list_st_prof&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">' . $i . '</a>';
             }
         }
         if ($page < $total_pages) {
-            echo '<a href="admin.php?page=list_st&p=' . ($page + 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">Următor &raquo;</a>';
+            echo '<a href="profesor.php?page=list_st_prof&p=' . ($page + 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">Următor &raquo;</a>';
         }
         ?>
     </div>

@@ -89,7 +89,7 @@ function save_password($password) {
     $password = password_hash($password, PASSWORD_DEFAULT);
     $email = addslashes($_SESSION['forgot']['email']);
 
-    $query = "UPDATE users SET password = '$password' WHERE email = '$email' LIMIT 1";
+    $query = "UPDATE users_1 SET password = '$password' WHERE email = '$email' LIMIT 1";
     mysqli_query($con, $query);
 }
 
@@ -98,7 +98,7 @@ function valid_email($email) {
 
     $email = addslashes($email);
 
-    $query = "SELECT * FROM users WHERE email = '$email' LIMIT 1";        
+    $query = "SELECT * FROM users_1 WHERE email = '$email' LIMIT 1";        
     $result = mysqli_query($con, $query);
     if ($result) {
         if (mysqli_num_rows($result) > 0) {

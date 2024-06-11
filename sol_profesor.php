@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $_SESSION['error'] = "Nu s-au găsit detalii pentru utilizatorul specificat.";
         }
-        header("Location: student.php?page=solicitari");
+        header("Location: profesor.php?page=solicitari_prof");
         exit();
         
     } else {
