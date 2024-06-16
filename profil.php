@@ -5,7 +5,7 @@ include "db_conn.php";
 if (isset($_SESSION['user_name'])) {
     $username = $_SESSION['user_name'];
 
-    $sql = "SELECT * FROM users_1 WHERE user_name = ?";
+    $sql = "SELECT * FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -39,7 +39,7 @@ if (isset($_SESSION['user_name'])) {
                 <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
             </div>
             <div class="profile-info-column">
-                <p><strong>An de studiu:</strong> <?php echo htmlspecialchars($user['year']); ?></p>
+                <p><strong>An de studiu:</strong> <?php echo htmlspecialchars($user['an']); ?></p>
                 <p><strong>Facultate:</strong> <?php echo htmlspecialchars($user['facultate']); ?></p>
                 <p><strong>Secția:</strong> <?php echo htmlspecialchars($user['sectia']); ?></p>
                 <p><strong>Tip învățământ:</strong> <?php echo htmlspecialchars($user['tip_invatamant']); ?></p>

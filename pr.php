@@ -2,7 +2,7 @@
 session_start();
 include "db_conn.php";
 
-if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['year']) && isset($_POST['facultate']) && isset($_POST['sectia']) && isset($_POST['tip_invatamant'])) {
+if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['email']) && isset($_POST['name']) && isset($_POST['an']) && isset($_POST['facultate']) && isset($_POST['sectia']) && isset($_POST['tip_invatamant'])) {
 
     function validate($data) {
         $data = trim($data);
@@ -15,17 +15,17 @@ if (isset($_POST['nr_matricol']) && isset($_POST['uname']) && isset($_POST['emai
     $uname = validate($_POST['uname']);
     $email = validate($_POST['email']);
     $name = validate($_POST['name']);
-    $year = validate($_POST['year']);
+    $year = validate($_POST['an']);
     $facultate = validate($_POST['facultate']);
     $sectia = validate($_POST['sectia']);
     $tip_invatamant = validate($_POST['tip_invatamant']);
 
-    if (empty($uname) || empty($email) || empty($name) || empty($year) || empty($facultate) || empty($sectia) || empty($tip_invatamant)) {
+    if (empty($uname) || empty($email) || empty($name) || empty($an) || empty($facultate) || empty($sectia) || empty($tip_invatamant)) {
         $_SESSION['error'] = "Toate câmpurile sunt obligatorii.";
         header("Location: update_user.php?nr_matricol=" . $nr_matricol);
         exit();
     } else {
-        $sql = "UPDATE users_1 SET user_name=?, email=?, name=?, year=?, facultate=?, sectia=?, tip_invatamant=? WHERE nr_matricol=?";
+        $sql = "UPDATE users SET user_name=?, email=?, name=?, an=?, facultate=?, sectia=?, tip_invatamant=? WHERE nr_matricol=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssssss", $uname, $email, $name, $year, $facultate, $sectia, $tip_invatamant, $nr_matricol);
 

@@ -6,7 +6,7 @@ include "db_conn.php";
 if (isset($_SESSION['user_name'])) {
     $username = $_SESSION['user_name'];
 
-    $sql = "SELECT nr_matricol, name, year, facultate, sectia, tip_invatamant FROM users_1 WHERE user_name = ?";
+    $sql = "SELECT nr_matricol, name, an, facultate, sectia, tip_invatamant FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -44,7 +44,7 @@ if (isset($_SESSION['user_name'])) {
             <h2>Informații Student</h2>
             <p><strong>Număr matricol:<?php echo htmlspecialchars($user['nr_matricol']); ?></p>
             <p><strong>Facultate:</strong> <?php echo htmlspecialchars($user['facultate']); ?></p>
-            <p><strong>An de studiu:</strong> <?php echo htmlspecialchars($user['year']); ?></p>
+            <p><strong>An de studiu:</strong> <?php echo htmlspecialchars($user['an']); ?></p>
         </div>
         <div class="columns">
             <div class="column box">

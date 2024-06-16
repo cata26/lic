@@ -34,6 +34,7 @@
                 <div class="service-container">   
                 <a href="admin.php?page=register"     class="register-button"><i class="fas fa-user"></i> Creare conturi </a>
                 <a href="admin.php?page=list_st"      class="list-button"><i class="fas fa-list"></i> Listă studenți</a>
+                <a href="admin.php?page=detalii"             class="list-button"><i class="fas fa-clipboard"></i> Detalii studenți</a></li>
                 <a href="logout.php"                  class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a>
                 </div>
             </div>
@@ -47,7 +48,7 @@ include "db_conn.php";
 if (isset($_SESSION['user_name'])) {
     $username = $_SESSION['user_name'];
 
-    $sql = "SELECT * FROM users_1 WHERE user_name = ?";
+    $sql = "SELECT * FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();

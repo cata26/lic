@@ -34,7 +34,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
     <li><a href="admin.php?page=main_admin"          class="main-button"><i class="fas fa-home"></i> Pagina principală</a></li><br>    
     <li><a href="admin.php?page=register"            class="register-button"><i class="fas fa-user"></i> Creare conturi </a></li><br>
     <li><a href="admin.php?page=list_st"             class="list-button"><i class="fas fa-list"></i> Listă studenți</a></li><br>
-    <li><a href="admin.php?page=det_suplimentare"   class="list-button"><i class="fas fa-clipboard"></i> Detalii studenți</a></li><br>
+    <li><a href="admin.php?page=detalii"             class="list-button"><i class="fas fa-clipboard"></i> Detalii studenți</a></li><br>
     <li><a href="logout.php"                         class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a><li>
     </ul>
 </nav>
@@ -43,7 +43,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
     <?php
     $defaultPage = 'main_admin'; 
     $page = isset($_GET['page']) ? $_GET['page'] : $defaultPage; 
-    $allowed_pages = ['main_admin', 'register', 'list_st','det_suplimentare'];
+    $allowed_pages = ['main_admin', 'register', 'list_st','detalii'];
 
     if (in_array($page, $allowed_pages) && file_exists($page . '.php')) {
         include($page . '.php');

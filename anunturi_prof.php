@@ -1,5 +1,45 @@
 <?php
 include "db_conn.php"; 
+
+function getAnnouncements($conn, $page, $records_per_page) {
+    // Calcularea offsetului
+    $offset = ($page - 1) * $records_per_page;
+
+    // Obținerea numărului total de înregistrări
+    $sql = "SELECT COUNT(*) FROM news";
+    $result = $conn->query($sql);
+    $total_records = $result->fetch_row()[0];
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Obținerea înregistrărilor pentru pagina curentă
+    $query = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?, ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $offset, $records_per_page);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Afișarea anunțurilor
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $date = date("d", strtotime($row["data"]));
+            $month = date("M", strtotime($row["data"]));
+            $year = date("Y", strtotime($row["data"]));
+            echo '<div class="announcement"><br>';
+            echo '<div class="date">';
+            echo '<span class="day">' . $date . '</span>';
+            echo '<span class="month-year">' . strtoupper($month) . ' ' . $year . '</span>';
+            echo '</div>';
+            echo '<h2>' . htmlspecialchars($row["title"]) . '</h2>';
+            echo '<p>' . nl2br(htmlspecialchars($row["content"])) . '</p>';
+            echo '</div>';
+        }
+    } else {
+        echo "Nu există anunțuri.";
+    }
+    $stmt->close();
+    return $total_pages;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ro">
@@ -7,31 +47,8 @@ include "db_conn.php";
     <meta charset="UTF-8">
     <title>Anunțuri</title>
     <link rel="stylesheet" href="css/style8.css">
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .pagination a {
-            margin: 0 5px;
-            padding: 8px 16px;
-            text-decoration: none;
-            background-color: #0f4470;
-            color: white;
-            border-radius: 4px;
-        }
-        .pagination a.active {
-            background-color: #9fc5e8;
-            color: black;
-        }
-        .pagination a:hover {
-            background-color: #cfe2f3;
-        }
-    </style>
 </head>
 <body>
-    <form>
     <h1>Anunțuri</h1>
     <div class="announcements">
         <?php
@@ -40,42 +57,11 @@ include "db_conn.php";
         
         // Determinarea paginii curente
         $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-        $offset = ($page - 1) * $records_per_page;
         
-        // Obținerea numărului total de înregistrări
-        $sql = "SELECT COUNT(*) FROM news";
-        $result = $conn->query($sql);
-        $total_records = $result->fetch_row()[0];
-        $total_pages = ceil($total_records / $records_per_page);
-        
-        $query = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?, ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("ii", $offset, $records_per_page);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $date = date("d", strtotime($row["data"]));
-                $month = date("M", strtotime($row["data"]));
-                $year = date("Y", strtotime($row["data"]));
-                ?>
-                <div class="announcement">
-                    <div class="date">
-                        <span class="day"><?php echo $date; ?></span>
-                        <span class="month-year"><?php echo strtoupper($month) . " " . $year; ?></span>
-                    </div>
-                    <h2><?php echo htmlspecialchars($row["title"]); ?></h2>
-                    <p><?php echo nl2br(htmlspecialchars($row["content"])); ?></p>
-                </div>
-                <?php
-            }
-        } else {
-            echo "Nu există anunțuri.";
-        }
-        $stmt->close();
+        // Afișarea anunțurilor și obținerea numărului total de pagini
+        $total_pages = getAnnouncements($conn, $page, $records_per_page);
         ?>
     </div>
-    </form>
     <div class="pagination">
         <?php
         if ($page > 1) {

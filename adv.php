@@ -1,8 +1,12 @@
+<?php
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
 <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Eliberare documente</title>
+    <title>Eliberare adeverințe</title>
     <link rel="icon" href="upt.png" type="image/x-icon">
     <link rel="stylesheet" href="css/style10.css">
 </head>
@@ -26,13 +30,19 @@
         <option value="angajare">angajare</option>
         <option value="asigurare de sanatate">asigurare de sanatate</option>
         <option value="banca">banca</option>
-        <option value="alocatie europena">alocatie europeana</option>
-        <option value="text"></option>
-    </select>
+        <option value="text">alt motiv...</option>
+</select>
+<textarea name="another_reason" id="another_reason" placeholder="Scrieți motivul aici"></textarea>
     <br><br>
-
+    
     <button type="submit">Trimite</button>
 </form>
 
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

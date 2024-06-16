@@ -14,7 +14,7 @@
             <p class="error"><?php echo $_GET['error']; ?></p>
         <?php } ?>
         <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password"><br>
+        <input type="password" name="parola" placeholder="Parola"><br>
         <button type="submit">Conectare</button><br><br>
         <a href="forgot.php">Ai uitat parola?</a>
     </form>

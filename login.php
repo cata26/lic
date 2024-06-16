@@ -2,7 +2,7 @@
 session_start(); 
 include "db_conn.php";
 
-if (isset($_POST['email']) && isset($_POST['password'])) {
+if (isset($_POST['email']) && isset($_POST['parola'])) {
 
     function validate($data){
        $data = trim($data);
@@ -12,12 +12,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     }
 
     $email = validate($_POST['email']);
-    $pass = validate($_POST['password']);
+    $parola = validate($_POST['parola']);
 
     if (empty($email)) {
         header("Location: index.php?error=Email is required");
         exit();
-    } else if(empty($pass)) {
+    } else if(empty($parola)) {
         header("Location: index.php?error=Password is required");
         exit();
     } else {
@@ -26,16 +26,27 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             exit();
         }
 
-        $sql = "SELECT * FROM users_1 WHERE email='$email'";
+        $sql = "SELECT * FROM users WHERE email='$email'";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result);
-            if (password_verify($pass, $row['password'])) { 
+            
+            // Check if the user is admin and verify password without hashing
+            if ($row['rol'] === 'admin' && $row['parola'] === $parola) {
                 $_SESSION['user_name'] = $row['user_name'];
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['rol'] = $row['rol'];
-                $location = determineLocation($row['rol']);
+                header("Location: admin.php");
+                exit();
+            // For non-admin users, continue to use password_verify for hashed passwords
+            
+            } elseif ($row['rol'] !== 'admin' && password_verify($parola, $row['parola'])) {
+                $_SESSION['user_name'] = $row['user_name'];
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['rol'] = $row['rol'];
+                $location = login($row['rol']);
                 header("Location: $location");
                 exit();
             } else {
@@ -52,14 +63,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     exit();
 }
 
-function determineLocation($rol) {
+function login($rol) {
     switch ($rol) {
         case 'student':
             return "student.php";
         case 'secretar':
             return "secretar.php";
-        case 'admin':
-            return "admin.php";
         case 'profesor':
             return "profesor.php";
         default:

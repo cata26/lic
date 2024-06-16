@@ -10,8 +10,8 @@
     
     <form id="myForm" action = "upload.php" method="post">
     <h1>Încărcare Document</h1>
-        <label for="nr_matricol">Număr Matricol:</label>
-        <input type="text" name="nr_matricol" id="nr_matricol" required><br>
+        <label for="user_name">Număr Matricol:</label>
+        <input type="text" name="user_name" id="user_name" required><br>
 
         <label for="fileToUpload">Selectați documentul:</label>
         <input type="file" name="fileToUpload" id="fileToUpload" required><br><br>

@@ -22,26 +22,21 @@ body {
     box-sizing: border-box;
 }
 
-form {
-    width: 100%;
-    max-width: 800px; /* Majorat pentru a acomoda două coloane */
-    border: 3px solid var(--bg-white);
-    padding: 30px;
-    background: var(--bg-white);
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-}
 
 .form-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Spațiu între coloane */
+    justify-content: space-between;
 }
-
-.form-row > div {
+.form-group {
     flex: 1;
-    min-width: 240px; /* Ajustați după preferințe */
+    min-width: 250px; /* Adjust this as needed */
+    padding: 10px;
+}
+.form-group label, .form-group input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 label {
@@ -95,15 +90,6 @@ button {
     text-align: center;
 }
 
-.message {
-    background-color: #dff0d8;
-    color: #3c763d;
-    padding: 10px;
-    border: 1px solid #d6e9c6;
-    border-radius: 4px;
-    margin-top: 10px;
-    text-align: center;
-}
 h2 {
     text-align: center;
     margin-bottom: 40px;

@@ -122,9 +122,9 @@ body {
 }
 
 .content {
-    margin-left: 250px; /* Width of the sidebar */
+    margin-left: 250px; 
     padding: 20px;
-    padding-top: 70px; /* Additional padding to prevent content from being hidden under the user navbar */
+    padding-top: 70px; 
 }
 
 body {

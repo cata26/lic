@@ -26,6 +26,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
             <li><a href="student.php?page=prog"           class="prog-button"><i class="fas fa-calendar-check"></i> Progrămari</a></li><br>
             <li><a href="student.php?page=anunturi_stud"  class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a></li><br>
             <li><a href="student.php?page=raport"         class="raport-button"><i class="fas fa-clipboard"></i> Raportare probleme</a></li><br>
+            <li><a href="student.php?page=status"         class="status-button"><i class="fas fa-check"></i> Status</a></li><br>
             <li><a href="logout.php"                      class="logout-button"><i class="fas fa-sign-out-alt"></i> Deconectare </a></li>
         </ul>
     </nav>
@@ -35,18 +36,13 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         <label for="toggle-dropdown" class="username">
             <?php echo $_SESSION['name']; ?></i>
         </label>
-        <!--<div class="dropdown-content">
-            <a href="student.php?page=profil" class ="profil-button"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
-            <a href="forgot.php"><i class="fa fa-key" aria-hidden="true"></i> Resetarea parolei</a>
-            <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Delogare</a>
-        </div>-->
     </div>
 
     <div class="content">
         <?php
         $defaultPage = 'main_st'; 
         $page = isset($_GET['page']) ? $_GET['page'] : $defaultPage; 
-        $allowed_pages = ['main_st', 'adv','solicitari', 'doc', 'prog', 'upload_burse', 'anunturi_stud', 'raport','profil'];
+        $allowed_pages = ['main_st', 'adv','solicitari', 'doc', 'prog', 'anunturi_stud', 'raport','status'];
 
         if (in_array($page, $allowed_pages) && file_exists($page . '.php')) {
             include($page . '.php');

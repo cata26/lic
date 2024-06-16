@@ -10,13 +10,13 @@ body {
 }
 
 .container {
-    width: 100%; /* Lățime mărită */
-    max-width: 1300px; /* Lățime maximă mărită */
+    width: 100%; 
+    max-width: 1300px; 
     background: #fff;
     padding: 5px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Centrează containerul orizontal */
+    margin: 0 auto; 
 }
 
 .header {

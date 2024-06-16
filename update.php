@@ -6,7 +6,7 @@ if (isset($_GET['nr_matricol'])) {
     $nr_matricol = $_GET['nr_matricol'];
 
     // Preia informațiile utilizatorului din baza de date
-    $sql = "SELECT * FROM users_1 WHERE nr_matricol = ?";
+    $sql = "SELECT * FROM users WHERE nr_matricol = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $nr_matricol);
     $stmt->execute();
@@ -52,7 +52,7 @@ if (isset($_GET['nr_matricol'])) {
         <input type="text" name="name" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Name"><br>
 
         <label>Year</label>
-        <input type="number" name="year" value="<?php echo htmlspecialchars($row['year']); ?>" placeholder="An"><br>
+        <input type="number" name="year" value="<?php echo htmlspecialchars($row['an']); ?>" placeholder="An"><br>
 
         <label>Facultate</label>
         <input type="text" name="facultate" value="<?php echo htmlspecialchars($row['facultate']); ?>" placeholder="Facultate"><br>
@@ -65,7 +65,7 @@ if (isset($_GET['nr_matricol'])) {
 
 
         <button type="submit">Actualizează</button>
-        <button type="back">Înapoi</button>
+        <button type="button" onclick="window.history.back()">Înapoi</button>
     </form>
 </body>
 </html>

@@ -1,62 +1,9 @@
-<?php
-$dir = "pdf/"; 
-
-// Numărul de înregistrări pe pagină
-$records_per_page = 10;
-
-// Determinarea paginii curente
-$page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-$offset = ($page - 1) * $records_per_page;
-
-// Obținerea listei de fișiere
-$files = [];
-if (is_dir($dir)) {
-    if ($dh = opendir($dir)) {
-        while (($file = readdir($dh)) !== false) {
-            if ($file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'pdf') {
-                $files[] = $file;
-            }
-        }
-        closedir($dh);
-    }
-}
-
-// Obținerea numărului total de înregistrări
-$total_records = count($files);
-$total_pages = ceil($total_records / $records_per_page);
-
-// Filtrarea fișierelor pentru pagina curentă
-$files = array_slice($files, $offset, $records_per_page);
-?>
-
 <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <title>Adeverințe</title>
     <link rel="stylesheet" type="text/css" href="css/style5.css">
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .pagination a {
-            margin: 0 5px;
-            padding: 8px 16px;
-            text-decoration: none;
-            background-color: #0f4470;
-            color: white;
-            border-radius: 4px;
-        }
-        .pagination a.active {
-            background-color: #9fc5e8;
-            color: black;
-        }
-        .pagination a:hover {
-            background-color: #cfe2f3;
-        }
-    </style>
 </head>
 <body>
 <div class="container mt-4">
@@ -67,6 +14,34 @@ $files = array_slice($files, $offset, $records_per_page);
             <th>Descărcare document</th>
         </tr>
         <?php
+        include "db_conn.php";
+        
+        function getPdfFiles($dir, $offset, $records_per_page) {
+            $files = [];
+            if (is_dir($dir)) {
+                if ($dh = opendir($dir)) {
+                    while (($file = readdir($dh)) !== false) {
+                        if ($file != "." && $file != ".." && strtolower(substr($file, strrpos($file, '.') + 1)) == 'pdf') {
+                            $files[] = $file;
+                        }
+                    }
+                    closedir($dh);
+                }
+            }
+            $total_records = count($files);
+            $total_pages = ceil($total_records / $records_per_page);
+            $files = array_slice($files, $offset, $records_per_page);
+
+            return [$files, $total_records, $total_pages];
+        }
+
+        $dir = "pdf/";
+        $records_per_page = 10;
+        $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
+        $offset = ($page - 1) * $records_per_page;
+
+        list($files, $total_records, $total_pages) = getPdfFiles($dir, $offset, $records_per_page);
+
         if (count($files) > 0) {
             foreach ($files as $file) {
                 echo "<tr>";

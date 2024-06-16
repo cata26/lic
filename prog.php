@@ -29,7 +29,7 @@
             <option value="13:00">13:00</option>
             <option value="13:30">13:30</option>
             <option value="14:00">14:00</option>
-            <!-- Adaugă alte opțiuni după necesități -->
+           
         </select><br>
 
         <input type="submit" value="Trimite">
