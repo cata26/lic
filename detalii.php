@@ -8,6 +8,14 @@
 <body>
     <form action="detalii_update.php" method="post">
         <h2>Detalii student</h2>
+        <?php 
+        if (isset($_SESSION['error'])) { ?>
+            <p class="error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
+        <?php } ?>
+
+        <?php if (isset($_SESSION['success'])) { ?>
+            <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
+        <?php } ?>
         <div class="form-row">
             <div class="form-group">
                 <label>Username</label>
@@ -24,10 +32,11 @@
                 <input type="text" name="primul_an_credite" placeholder="An 1 Credite" >
                 <label>An 2</label>
                 <input type="text" name="an_2" placeholder="An 2" >
-            </div>
-            <div class="form-group">
                 <label>An 2 Medie</label>
                 <input type="text" name="an_2_medie" placeholder="An 2 Medie" >
+            </div>
+            <div class="form-group">
+               
                 <label>An 2 Credite</label>
                 <input type="text" name="an_2_credite" placeholder="An 2 Credite" >
                 <label>An 3</label>
@@ -40,12 +49,12 @@
                 <input type="text" name="an_4" placeholder="An 4" >
                 <label>An 4 Medie</label>
                 <input type="text" name="an_4_medie" placeholder="An 4 Medie" >
-            </div>
-            <div class="form-group">
                 <label>An 4 Credite</label>
                 <input type="text" name="an_4_credite" placeholder="An 4 Credite" >
                 <label>An 5</label>
                 <input type="text" name="an_5" placeholder="An 5" >
+            </div>
+            <div class="form-group">
                 <label>An 5 Medie</label>
                 <input type="text" name="an_5_medie" placeholder="An 5 Medie" >
                 <label>An 5 Credite</label>
@@ -56,6 +65,10 @@
                 <input type="text" name="an_6_medie" placeholder="An 6 Medie" >
                 <label>An 6 Credite</label>
                 <input type="text" name="an_6_credite" placeholder="An 6 Credite" >
+                <label>Bursa</label>
+                <input type="text" name="bursa" placeholder="Bursa" >
+                <label>Numar semestre bursa</label>
+                <input type="text" name="nr_semestre_bursa" placeholder="Numar semestre bursa" >
             </div>
         </div>
         <button type="submit">Adaugă</button>

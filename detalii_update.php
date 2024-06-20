@@ -7,19 +7,27 @@ function validate($data) {
 }
 
 function detalii($conn, $params) {
-    $sql = "SELECT * FROM medii WHERE user_name=?";
+    
+    $sql = "SELECT * FROM users WHERE user_name=?";
     $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        error_log("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+    $stmt->bind_param("s", $params['user_name']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        $_SESSION['error'] = "Numele de utilizator nu există în baza de date.";
         return false;
     }
 
+    // Check if user_name already exists in the medii table
+    $sql = "SELECT * FROM medii WHERE user_name=?";
+    $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $params['user_name']);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $_SESSION['error'] = "Numele de utilizator este deja folosit. Încearcă altceva!";
+        $_SESSION['error'] = "Numele de utilizator este deja folosit în medii. Încearcă altceva!";
         return false;
     } else {
         $fields = [
@@ -43,7 +51,9 @@ function detalii($conn, $params) {
             'an_5_credite' => 'i',
             'an_6' => 's',
             'an_6_medie' => 'd',
-            'an_6_credite' => 'i'
+            'an_6_credite' => 'i',
+            'bursa' => 'i',
+            'nr_semestre_bursa' => 'i'
         ];
 
         $bind_types = '';
@@ -58,7 +68,7 @@ function detalii($conn, $params) {
             }
         }
 
-        $sql2 = "INSERT INTO medii(user_name, nota_admitere, an_admitere, primul_an, primul_an_medie, primul_an_credite, an_2, an_2_medie, an_2_credite, an_3, an_3_medie, an_3_credite, an_4, an_4_medie, an_4_credite, an_5, an_5_medie, an_5_credite, an_6, an_6_medie, an_6_credite) VALUES(" . implode(',', array_fill(0, count($fields), '?')) . ")";
+        $sql2 = "INSERT INTO medii(user_name, nota_admitere, an_admitere, primul_an, primul_an_medie, primul_an_credite, an_2, an_2_medie, an_2_credite, an_3, an_3_medie, an_3_credite, an_4, an_4_medie, an_4_credite, an_5, an_5_medie, an_5_credite, an_6, an_6_medie, an_6_credite,bursa,nr_semestre_bursa) VALUES(" . implode(',', array_fill(0, count($fields), '?')) . ")";
         $stmt2 = $conn->prepare($sql2);
         if (!$stmt2) {
             error_log("Prepare failed: (" . $conn->errno . ") " . $conn->error);
@@ -107,6 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $params['an_6'] = isset($_POST['an_6']) ? validate($_POST['an_6']) : null;
     $params['an_6_medie'] = isset($_POST['an_6_medie']) ? validate($_POST['an_6_medie']) : null;
     $params['an_6_credite'] = isset($_POST['an_6_credite']) ? validate($_POST['an_6_credite']) : null;
+    $params['bursa'] = isset($_POST['bursa']) ? validate($_POST['bursa']) : null;
+    $params['nr_semestre_bursa'] = isset($_POST['nr_semestre_bursa']) ? validate($_POST['nr_semestre_bursa']) : null;
 
     if (detalii($conn, $params)) {
         header("Location: admin.php?page=detalii");

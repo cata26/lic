@@ -53,10 +53,10 @@ $students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_d
     <table class="table table-striped">
         <thead>
             <tr>
-                <th><a href="?page=list_st&p=<?php echo $page; ?>&sort=nr_matricol&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Număr Matricol</a></th>
+                <th>Număr Matricol</a></th>
                 <th><a href="?page=list_st&p=<?php echo $page; ?>&sort=name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Nume</a></th>
-                <th><a href="?page=list_st&p=<?php echo $page; ?>&sort=user_name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Username</a></th>
-                <th><a href="?page=list_st&p=<?php echo $page; ?>&sort=email&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Email</a></th>
+                <th>Username</a></th>
+                <th>Email</></th>
                 <th>Acțiuni</th>
             </tr>
         </thead>

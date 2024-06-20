@@ -54,7 +54,7 @@ $students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_d
         <thead>
             <tr>
                 <th>Număr Matricol</th>
-                <th><a href="?page=list_st_prof&p=<?php echo $page; ?>&sort=name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Nume</a></th>
+                <th><a href="?page=list_st_sec&p=<?php echo $page; ?>&sort=name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Nume</a></th>
                 <th>Username</th>
                 <th>Email</th>
             </tr>
@@ -81,17 +81,17 @@ $students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_d
         <div class="pagination">
             <?php
             if ($page > 1) {
-                echo '<a href="profesor.php?page=list_st_prof&p=' . ($page - 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">&laquo; Anterior</a>';
+                echo '<a href="secretar.php?page=list_st_sec&p=' . ($page - 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">&laquo; Anterior</a>';
             }
             for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
-                    echo '<a href="profesor.php?page=list_st_prof&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '" class="active">' . $i . '</a>';
+                    echo '<a href="secretar.php?page=list_st_sec&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '" class="active">' . $i . '</a>';
                 } else {
-                    echo '<a href="profesor.php?page=list_st_prof&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">' . $i . '</a>';
+                    echo '<a href="secretar.php?page=list_st_sec&p=' . $i . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">' . $i . '</a>';
                 }
             }
             if ($page < $total_pages) {
-                echo '<a href="profesor.php?page=list_st_prof&p=' . ($page + 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">Următor &raquo;</a>';
+                echo '<a href="secretar.php?page=list_st_sec&p=' . ($page + 1) . '&sort=' . $sort_column . '&dir=' . $sort_direction . '">Următor &raquo;</a>';
             }
             ?>
         </div>

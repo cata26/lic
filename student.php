@@ -32,9 +32,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
     </nav>
 
        <div class="user-navbar">    
-        <input type="checkbox" id="toggle-dropdown" class="toggle-dropdown">
-        <label for="toggle-dropdown" class="username">
-            <?php echo $_SESSION['name']; ?></i>
+        <label for="user_name" class="username">
+        <?php echo $_SESSION['name']; ?>
         </label>
     </div>
 

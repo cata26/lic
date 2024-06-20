@@ -46,8 +46,10 @@ if (isset($_SESSION['user_name'])) {
                 <h2>Link-uri Utile</h2>
                 <div class="link-container">
                     <a href="https://www.upt.ro">UPT</a>
-                    <a href="https://facultate.upt.ro">Facultate</a>
-                    <a href="https://campusvirtual.upt.ro">Campus Virtual</a>
+                    <a href="https://ac.upt.ro/">AC</a>
+                    <a href="https://etc.upt.ro/">ETTI</a>
+                    <a href="http://www.arh.upt.ro/">Arhitectura</a>
+                    <a href="https://cv.upt.ro/login/index.php">Campus Virtual</a>
                     <a href="https://practica.upt.ro">Practica</a>
                     <a href="https://ccoc.upt.ro">CCOC</a>
                     <a href="https://rezervari.upt.ro">Rezervări</a>
@@ -62,6 +64,7 @@ if (isset($_SESSION['user_name'])) {
                 <a href="profesor.php?page=solicitari_prof"     class="list-button"><i class="fas fa-clipboard"></i> Solicitari</a>
                 <a href="student.php?page=doc_prof"             class="doc-button"><i class="fas fa-file"></i> Documente</a>
                 <a href="profesor.php?page=anunturi"            class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a>
+                <a href="profesor.php?page=raport_prof"          class="raport-button"><i class="fas fa-clipboard"></i> Raportare probleme</a>
                 </div>
             </div>
         </div>

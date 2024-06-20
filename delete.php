@@ -1,25 +1,19 @@
 <?php
 session_start();
-include "db_conn.php";  // Include scriptul de conectare la baza de date
+include "db_conn.php";  
 
 function deleteUser($conn, $nr_matricol) {
-    // Pregătește declarația SQL pentru a preveni SQL injection
+    
     $sql = "DELETE FROM users WHERE nr_matricol = ?";
     $stmt = $conn->prepare($sql);
-    
-    if ($stmt === false) {
-        return "Eroare la pregătirea interogării SQL: " . $conn->error;
-    }
-    
     $stmt->bind_param("s", $nr_matricol);
 
     if ($stmt->execute()) {
         $stmt->close();
         return "Utilizatorul a fost șters cu succes.";
     } else {
-        $error = "A apărut o eroare la ștergerea utilizatorului: " . $stmt->error;
-        $stmt->close();
-        return $error;
+        return "A apărut o eroare la ștergerea utilizatorului. ";
+        
     }
 }
 

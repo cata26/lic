@@ -12,7 +12,7 @@ function getAnnouncements($conn, $page, $records_per_page) {
     $total_pages = ceil($total_records / $records_per_page);
 
     // Obținerea înregistrărilor pentru pagina curentă
-    $query = "SELECT * FROM news ORDER BY created_at DESC LIMIT ?, ?";
+    $query = "SELECT * FROM news ORDER BY data DESC LIMIT ?, ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $offset, $records_per_page);
     $stmt->execute();
@@ -49,8 +49,9 @@ function getAnnouncements($conn, $page, $records_per_page) {
     <link rel="stylesheet" href="css/style8.css">
 </head>
 <body>
-    <h1>Anunțuri</h1>
+    
     <div class="announcements">
+    <h1>Anunțuri</h1>
         <?php
         // Numărul de înregistrări pe pagină
         $records_per_page = 4;
