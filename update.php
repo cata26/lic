@@ -41,36 +41,32 @@ if (isset($_GET['nr_matricol'])) {
             <div class="form-group">
                 <input type="hidden" name="nr_matricol" value="<?php echo htmlspecialchars($row['nr_matricol']); ?>">
 
-                <label>Rol</label>
                 <input type="text" name="rol" value="<?php echo htmlspecialchars($row['rol']); ?>" placeholder="Rol"><br>
 
-                <label>User Name</label>
                 <input type="text" name="uname" value="<?php echo htmlspecialchars($row['user_name']); ?>" placeholder="Username"><br>
 
-                <label>Email</label>
+              
                 <input type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" placeholder="Email"><br>
 
-                <label>Nume</label>
+           
                 <input type="text" name="name" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Name"><br>
 
-                <label>An</label>
-                <input type="number" name="an" value="<?php echo htmlspecialchars($row['an']); ?>" placeholder="An"><br>
+          
+                <input type="text" name="an" value="<?php echo htmlspecialchars($row['an']); ?>" placeholder="An"><br>
 
-                <label>Facultate</label>
+              
                 <input type="text" name="facultate" value="<?php echo htmlspecialchars($row['facultate']); ?>" placeholder="Facultate"><br>
             </div>
             <div class="form-group">
-                <label>Secția</label>
+               
                 <input type="text" name="sectia" value="<?php echo htmlspecialchars($row['sectia']); ?>" placeholder="Secția"><br>
 
-                <label>Tip învățământ</label>
                 <input type="text" name="tip_invatamant" value="<?php echo htmlspecialchars($row['tip_invatamant']); ?>" placeholder="Tip învățământ"><br>
 
-                <label>Localitate domiciu</label>
+                
                 <input type="text" name="localitate_dom" value="<?php echo htmlspecialchars($row['localitate_dom']); ?>" placeholder="Localitate"><br>
 
-                <label>Judet domiciu</label>
-                <input type="text" name="judet_dom" value="<?php echo htmlspecialchars($row['judet_dom']); ?>" placeholder="Judet"><br>
+                <input type="text" name="judet_dom" value="<?php echo htmlspecialchars($row['judet_dom']); ?>" placeholder="Județ"><br>
 
                 <label>Data nașterii</label>
                 <input type="date" name="data_nasterii" value="<?php echo htmlspecialchars($row['data_nasterii']); ?>" placeholder="Data nașterii"><br>

@@ -46,7 +46,7 @@ $reclamatii = getStudentReclamatii($conn, $name, $offset, $records_per_page);
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Reclamațiile mele</title>
+    <title>Problemele mele</title>
     <link rel="stylesheet" href="css/style5.css">
 </head>
 <body>
@@ -58,7 +58,7 @@ $reclamatii = getStudentReclamatii($conn, $name, $offset, $records_per_page);
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
     <?php } ?>
-    <h1>Reclamațiile mele</h1>
+    <h1>Problemele mele</h1>
     <table class="table table-striped">
         <thead>
             <tr>

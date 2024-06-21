@@ -44,7 +44,7 @@ list($documents, $total_records, $total_pages) = getDocuments($dir, $offset, $re
 </head>
 <body>
 <div class="container">
-    <h1>Documente Generate</h1>
+    <h1>Documente</h1>
     <table>
         <tr>
             <th>Tip document</th>
