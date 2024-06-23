@@ -89,6 +89,6 @@ body {
     }
 
     .link-container a, .service-container a {
-        flex: 1 1 calc(100% - 10px); /* Ajustare lățime elemente pentru ecrane mici */
+        flex: 1 1 calc(100% - 10px); 
     }
 }

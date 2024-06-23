@@ -8,22 +8,21 @@ function uploadFile($user_name, $file) {
     $fileTmpName = $file['tmp_name'];
     $target_file = $target_dir . basename($fileName);
 
-    // Creează directorul dacă nu există
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
 
-    // Verifică dacă fișierul există deja
     if (file_exists($target_file)) {
-        return "Ne pare rău, fișierul există deja.";
+        $_SESSION['error'] = "Ne pare rău, fișierul există deja.";
     }
-
-    // Încearcă să încarce fișierul
+    else{
+        
     if (move_uploaded_file($fileTmpName, $target_file)) {
-        return "Fișierul " . htmlspecialchars($fileName) . " a fost încărcat.";
+        $_SESSION['success'] = "Fișierul " . htmlspecialchars($fileName) . " a fost încărcat.";
     } else {
-        return "Ne pare rău, a fost o eroare la încărcarea fișierului tău.";
+        $_SESSION['error'] = "Ne pare rău, a fost o eroare la încărcarea fișierului tău.";
     }
+}
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -33,11 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user_name && $file) {
         $message = uploadFile($user_name, $file);
         $_SESSION['message'] = $message;
-        header("Location: upload.php");
+        header("Location: secretar.php?page=form_inc");
         exit();
     } else {
         $_SESSION['error'] = "Numărul matricol și fișierul sunt necesare.";
-        header("Location: upload.php");
+        header("Location: secretar.php?page=form_inc");
         exit();
     }
 }

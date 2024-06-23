@@ -44,7 +44,8 @@ if (isset($_SESSION['user_name'])) {
             <h2>Informații Student</h2>
             <p><strong>Număr matricol:<?php echo htmlspecialchars($user['nr_matricol']); ?></p>
             <p><strong>Facultate:</strong> <?php echo htmlspecialchars($user['facultate']); ?></p>
-            <p><strong>An de studiu:</strong> <?php echo htmlspecialchars($user['an']); ?></p>
+            <p><strong>Secția:</strong> <?php echo htmlspecialchars($user['sectia']); ?></p>
+            <p><strong>Anul </strong> <?php echo htmlspecialchars($user['an']); ?></p>
         </div>
         <div class="columns">
             <div class="column box">

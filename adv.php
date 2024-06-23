@@ -32,8 +32,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         <option value="banca">banca</option>
         <option value="alta facultate">alta facultate</option>
         <option value="text">alt motiv...</option>
-</select>
-<textarea name="alt_motiv" id="alt_motiv" placeholder="Scrieți motivul aici"></textarea>
+    </select>
+    <textarea name="alt_motiv" id="alt_motiv" placeholder="Scrieți motivul aici"></textarea>
     <br><br>
     
     <button type="submit">Trimite</button>

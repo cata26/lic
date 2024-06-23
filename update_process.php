@@ -13,8 +13,10 @@ function updateUser($conn, $nr_matricol, $uname, $rol, $email, $name, $an, $facu
 
     if ($stmt->execute()) {
         $_SESSION['success'] = "Utilizatorul a fost actualizat cu succes!";
+        header("Location: secretar.php?page=list_st");
     } else {
         $_SESSION['error'] = "A apărut o eroare în actualizarea datelor ";
+        header("Location: secretar.php?page=list_st");
     }
 
     $stmt->close();

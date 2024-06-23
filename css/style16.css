@@ -22,6 +22,16 @@ body {
     box-sizing: border-box;
 }
 
+form {
+    width: 100%;
+    max-width: 1200px; 
+    border: 3px solid var(--bg-white);
+    padding: 30px;
+    background: var(--bg-white);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
 
 .form-row {
     display: flex;
@@ -30,7 +40,7 @@ body {
 }
 .form-group {
     flex: 1;
-    min-width: 250px; /* Adjust this as needed */
+    min-width: 250px; 
     padding: 10px;
 }
 .form-group label, .form-group input {

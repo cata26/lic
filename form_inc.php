@@ -8,51 +8,22 @@
 </head>
 <body>
     
-    <form id="myForm" action = "upload.php" method="post">
-    <h1>Încărcare Document</h1>
-        <label for="user_name">Număr Matricol:</label>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+    <?php 
+        if (isset($_SESSION['error'])) { ?>
+            <p class="error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
+        <?php } ?>
+
+        <?php if (isset($_SESSION['success'])) { ?>
+            <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
+        <?php } ?>
+        <h1>Încărcare Document</h1>
+        <label>Nume utilizator:</label>
         <input type="text" name="user_name" id="user_name" required><br>
-
-        <label for="fileToUpload">Selectați documentul:</label>
+        <label>Selectați documentul:</label>
         <input type="file" name="fileToUpload" id="fileToUpload" required><br><br>
-
-        <div id="errorMessage" style="color: red;"></div>
-
-        <input type="button" value="Încarcă Document" onclick="uploadDocument()">
+        <button type="submit" value="Încarcă Document">Încarcă document</button>
     </form>
 
-    <script>
-        function uploadDocument() {
-            var form = document.getElementById("myForm");
-            var formData = new FormData(form);
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "upload.php", true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // Răspunsul este OK, afișăm mesajul de succes
-                document.getElementById("errorMessage").innerText = "Documentul a fost încarcat cu succes!";
-                
-                // Mesajul va dispărea după 3 secunde
-                setTimeout(function() {
-                    document.getElementById("errorMessage").innerText = "";
-                }, 3000);
-                
-                form.reset();
-            } else {
-                // A apărut o eroare în timpul trimiterii cererii
-                document.getElementById("errorMessage").innerText = "A apărut o eroare în timpul încarcarii documentului. Vă rugăm să încercați din nou mai târziu.";
-                
-                // Mesajul va dispărea după 3 secunde
-                setTimeout(function() {
-                    document.getElementById("errorMessage").innerText = "";
-                }, 3000);
-            }
-        }
-    };
-    xhr.send(formData);
-}
-    </script>
 </body>
 </html>

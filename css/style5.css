@@ -23,9 +23,9 @@ h1 {
   margin-top: 20px;
 }
 
-.container {
+.list {
   width: 90%;
-  max-width: 1200px; /* Lărgește containerul */
+  max-width: 1200px;
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -44,9 +44,9 @@ table, th, td {
 }
 
 th, td {
-  padding: 15px; /* Mărește padding-ul celulelor */
+  padding: 15px;
   text-align: left;
-  font-size: 16px; /* Mărește dimensiunea fontului */
+  font-size: 16px;
 }
 
 th {
@@ -83,4 +83,24 @@ th {
 
 .pagination a:hover {
   background-color: var(--container-color);
+}
+
+.error {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 10px;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 10px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
 }

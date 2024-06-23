@@ -31,7 +31,7 @@ if (isset($_POST['email']) && isset($_POST['parola'])) {
         if (mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result);
             
-            // Check if the user is admin and verify password without hashing
+            
             if ($row['rol'] === 'admin' && $row['parola'] === $parola) {
                 $_SESSION['user_name'] = $row['user_name'];
                 $_SESSION['name'] = $row['name'];
@@ -39,7 +39,7 @@ if (isset($_POST['email']) && isset($_POST['parola'])) {
                 $_SESSION['rol'] = $row['rol'];
                 header("Location: admin.php");
                 exit();
-            // For non-admin users, continue to use password_verify for hashed passwords
+            
             
             } elseif ($row['rol'] !== 'admin' && password_verify($parola, $row['parola'])) {
                 $_SESSION['user_name'] = $row['user_name'];

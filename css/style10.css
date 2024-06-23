@@ -24,24 +24,25 @@ body {
 
 form {
     width: 100%;
-    max-width: 800px; /* Majorat pentru a acomoda două coloane */
+    max-width: 800px; 
     border: 3px solid var(--bg-white);
     padding: 30px;
     background: var(--bg-white);
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 20px;
+
 }
 
 .form-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Spațiu între coloane */
+    gap: 20px;
 }
 
 .form-row > div {
     flex: 1;
-    min-width: 240px; /* Ajustați după preferințe */
+    min-width: 240px; 
 }
 
 label {
@@ -95,15 +96,6 @@ button {
     text-align: center;
 }
 
-.message {
-    background-color: #dff0d8;
-    color: #3c763d;
-    padding: 10px;
-    border: 1px solid #d6e9c6;
-    border-radius: 4px;
-    margin-top: 10px;
-    text-align: center;
-}
 h2 {
     text-align: center;
     margin-bottom: 40px;

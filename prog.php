@@ -17,9 +17,9 @@
             <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
         <?php } ?>
 
-        <label for="data_programarii">Data programării*</label>
+        <label>Data programării*</label>
         <input type="date" id="data_programarii" name="data_programarii" required><br>
-        <label for="ora_programarii">Ora programării*</label>
+        <label>Ora programării*</label>
         <select id="ora_programarii" name="ora_programarii" required>
             <option value="10:00">10:00</option>
             <option value="10:30">10:30</option>
@@ -29,7 +29,6 @@
             <option value="13:00">13:00</option>
             <option value="13:30">13:30</option>
             <option value="14:00">14:00</option>
-           
         </select><br>
 
         <input type="submit" value="Trimite">
