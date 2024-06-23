@@ -14,11 +14,7 @@ function saveSolicitare($conn, $username, $document_type) {
         $row = $result->fetch_assoc();
         $name = $row['name'];
         $facultate = $row['facultate'];
-
-        // Curățare date
         $document_type = $conn->real_escape_string($document_type);
-
-        // Salvarea solicitării în baza de date
         $sql = "INSERT INTO solicitari (name, facultate, document_type) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $name, $facultate, $document_type);

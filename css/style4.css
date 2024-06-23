@@ -44,21 +44,21 @@ body {
   border: none;
   cursor: pointer;
   display: flex;
-  align-items: center; /* Centrăm elementele pe verticală */
-  justify-content: start; /* Aliniem conținutul la stânga */
-  width: 20px; /* Lățimea imaginii tale */
-  height: 20px; /* Înălțimea imaginii tale */
-  background-color: var(--main-color); /* Culoarea fundalului butonului */
-  color: white; /* Culoarea textului */
-  padding: 20px; /* Spatiul în interiorul butonului */
-  border-radius: 5px; /* Colțuri rotunjite pentru buton */
-  outline: none; /* Elimină conturul atunci când butonul este focalizat */
+  align-items: center; 
+  justify-content: start; 
+  width: 20px; 
+  height: 20px; 
+  background-color: var(--main-color);
+  color: white; 
+  padding: 20px; 
+  border-radius: 5px;
+  outline: none; 
 }
 
 .dropbtn img {
-  width: 20px; /* Lățimea imaginii tale */
-  height: 20px; /* Înălțimea imaginii tale */
-  margin-left: 50px; /* Spațiu între text și săgeată */
+  width: 20px;
+  height: 20px; 
+  margin-left: 50px; 
 }
 
 .dropdown-content {

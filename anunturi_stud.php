@@ -2,23 +2,19 @@
 include "db_conn.php"; 
 
 function getAnnouncements($conn, $page, $records_per_page) {
-    // Calcularea offsetului
-    $offset = ($page - 1) * $records_per_page;
 
-    // Obținerea numărului total de înregistrări
+    $start = ($page - 1) * $records_per_page;
     $sql = "SELECT COUNT(*) FROM news";
     $result = $conn->query($sql);
     $total_records = $result->fetch_row()[0];
     $total_pages = ceil($total_records / $records_per_page);
 
-    // Obținerea înregistrărilor pentru pagina curentă
     $query = "SELECT * FROM news ORDER BY data DESC LIMIT ?, ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $offset, $records_per_page);
+    $stmt->bind_param("ii", $start, $records_per_page);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Afișarea anunțurilor
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $date = date("d", strtotime($row["data"]));
@@ -39,8 +35,13 @@ function getAnnouncements($conn, $page, $records_per_page) {
     $stmt->close();
     return $total_pages;
 }
-
 ?>
+
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
+
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -53,13 +54,8 @@ function getAnnouncements($conn, $page, $records_per_page) {
     <div class="announcements">
     <h1>Anunțuri</h1>
         <?php
-        // Numărul de înregistrări pe pagină
         $records_per_page = 4;
-        
-        // Determinarea paginii curente
         $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-        
-        // Afișarea anunțurilor și obținerea numărului total de pagini
         $total_pages = getAnnouncements($conn, $page, $records_per_page);
         ?>
     </div>
@@ -82,3 +78,9 @@ function getAnnouncements($conn, $page, $records_per_page) {
     </div>
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

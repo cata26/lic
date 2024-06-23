@@ -68,7 +68,7 @@ body {
 }
 
 .link-container a, .service-container a {
-    flex: 1 1 calc(50% - 10px); /* Ajustare lățime elemente */
+    flex: 1 1 calc(50% - 10px);
     background: #4a90e2;
     color: #fff;
     text-align: center;

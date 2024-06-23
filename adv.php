@@ -31,6 +31,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         <option value="asigurare de sanatate">asigurare de sanatate</option>
         <option value="banca">banca</option>
         <option value="alta facultate">alta facultate</option>
+        <option value="alocatie europeana">alocatie europeana</option>
         <option value="text">alt motiv...</option>
     </select>
     <textarea name="alt_motiv" id="alt_motiv" placeholder="Scrieți motivul aici"></textarea>
@@ -38,7 +39,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
     
     <button type="submit">Trimite</button>
 </form>
-
 </body>
 </html>
 <?php

@@ -1,3 +1,31 @@
+<?php
+include "db_conn.php";
+
+if (isset($_SESSION['user_name'])) {
+    $username = $_SESSION['user_name'];
+
+    $sql = "SELECT * FROM users WHERE user_name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+    } else {
+        echo "Utilizatorul nu a fost găsit.";
+        exit();
+    }
+} else {
+    header("Location: login.php");
+    exit();
+}
+?>
+
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -45,26 +73,8 @@
 </body>
 </html>
 <?php
-include "db_conn.php";
-
-if (isset($_SESSION['user_name'])) {
-    $username = $_SESSION['user_name'];
-
-    $sql = "SELECT * FROM users WHERE user_name = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-    } else {
-        echo "Utilizatorul nu a fost găsit.";
-        exit();
-    }
 } else {
-    header("Location: login.php");
-    exit();
+   header("Location: index.php");
+   exit();
 }
 ?>
-

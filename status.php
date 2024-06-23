@@ -9,10 +9,10 @@ if (!isset($_SESSION['name'])) {
 
 $name = $_SESSION['name'];
 
-function getStudentReclamatii($conn, $name, $offset, $records_per_page) {
+function getStudentReclamatii($conn, $name, $start, $records_per_page) {
     $sql = "SELECT problema, created_at, status FROM raport WHERE name = ? ORDER BY created_at DESC LIMIT ?, ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sii", $name, $offset, $records_per_page);
+    $stmt->bind_param("sii", $name, $start, $records_per_page);
     $stmt->execute();
     $result = $stmt->get_result();
     $reclamatii = [];
@@ -36,10 +36,14 @@ function getStudentTotalRecords($conn, $name) {
 
 $records_per_page = 5;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-$offset = ($page - 1) * $records_per_page;
+$start = ($page - 1) * $records_per_page;
 $total_records = getStudentTotalRecords($conn, $name);
 $total_pages = ceil($total_records / $records_per_page);
-$reclamatii = getStudentReclamatii($conn, $name, $offset, $records_per_page);
+$reclamatii = getStudentReclamatii($conn, $name, $start, $records_per_page);
+?>
+
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +54,7 @@ $reclamatii = getStudentReclamatii($conn, $name, $offset, $records_per_page);
     <link rel="stylesheet" href="css/style5.css">
 </head>
 <body>
-<div class="container mt-4">
+<div class="container list">
     <?php if (isset($_SESSION['error'])) { ?>
         <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
     <?php } ?>
@@ -59,7 +63,7 @@ $reclamatii = getStudentReclamatii($conn, $name, $offset, $records_per_page);
         <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
     <?php } ?>
     <h1>Problemele mele</h1>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Descriere</th>
@@ -105,3 +109,10 @@ $reclamatii = getStudentReclamatii($conn, $name, $offset, $records_per_page);
 </div>
 </body>
 </html>
+
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

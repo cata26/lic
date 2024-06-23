@@ -3,7 +3,7 @@ session_start();
 include "db_conn.php";
 
 function reportProblem($conn, $username, $problema) {
-    // Preluarea detaliilor studentului din baza de date
+ 
     $sql = "SELECT nr_matricol, name FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -14,7 +14,7 @@ function reportProblem($conn, $username, $problema) {
         $row = $result->fetch_assoc();
         $name = $row['name'];
 
-        // Salvarea programării în baza de date
+
         $sql = "INSERT INTO raport (name, problema) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $name, $problema);

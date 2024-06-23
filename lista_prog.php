@@ -1,10 +1,10 @@
 <?php
 include "db_conn.php";
 
-function getProgramari($conn, $offset, $records_per_page) {
+function getProgramari($conn, $start, $records_per_page) {
     $sql = "SELECT nr_matricol, name, data_prog, ora_prog, created_at FROM prog ORDER BY created_at DESC LIMIT ?, ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $offset, $records_per_page);
+    $stmt->bind_param("ii", $start, $records_per_page);
     $stmt->execute();
     $result = $stmt->get_result();
     $programari = [];
@@ -25,10 +25,15 @@ function getTotalRecords($conn) {
 
 $records_per_page = 10;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-$offset = ($page - 1) * $records_per_page;
+$start = ($page - 1) * $records_per_page;
 $total_records = getTotalRecords($conn);
 $total_pages = ceil($total_records / $records_per_page);
-$programari = getProgramari($conn, $offset, $records_per_page);
+$programari = getProgramari($conn, $start, $records_per_page);
+?>
+
+<?php
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 ?>
 
 <!DOCTYPE html>
@@ -39,16 +44,17 @@ $programari = getProgramari($conn, $offset, $records_per_page);
     <link rel="stylesheet" href="css/style5.css">
 </head>
 <body>
-<div class="container mt-4">
-    <?php if (isset($_SESSION['error'])) { ?>
-        <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
-    <?php } ?>
+<div class="container list">
+        <?php 
+        if (isset($_SESSION['error'])) { ?>
+            <p class="error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
+        <?php } ?>
 
-    <?php if (isset($_SESSION['success'])) { ?>
-        <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
-    <?php } ?>
+        <?php if (isset($_SESSION['success'])) { ?>
+            <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
+        <?php } ?>
     <h1>Programări</h1>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Număr matricol</th>
@@ -68,7 +74,7 @@ $programari = getProgramari($conn, $offset, $records_per_page);
                 echo "<td>" . htmlspecialchars($prog['data_prog']) . "</td>";
                 echo "<td>" . htmlspecialchars($prog['ora_prog']) . "</td>";
                 echo "<td>
-                    <form method='post' action='delete_prog.php'>
+                    <form method='post' action='delete_prog.php' 'style='display:inline-block';>
                         <input type='hidden' name='delete_i' value='" . htmlspecialchars($prog['data_prog']) . "'>
                         <button type='submit' class='btn btn-danger btn-sm'>Șterge</button>
                     </form>
@@ -104,3 +110,9 @@ $programari = getProgramari($conn, $offset, $records_per_page);
 </div>
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

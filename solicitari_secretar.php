@@ -1,10 +1,10 @@
 <?php
 include "db_conn.php";
 
-function getSolicitari($conn, $offset, $records_per_page) {
+function getSolicitari($conn, $start, $records_per_page) {
     $sql = "SELECT name, facultate, document_type, created_at FROM solicitari ORDER BY created_at DESC LIMIT ?, ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $offset, $records_per_page);
+    $stmt->bind_param("ii", $start, $records_per_page);
     $stmt->execute();
     $result = $stmt->get_result();
     $solicitari = [];
@@ -23,19 +23,17 @@ function getTotalRecords($conn) {
     return $result->fetch_row()[0];
 }
 
-// Numărul de înregistrări pe pagină
 $records_per_page = 10;
-
-// Determinarea paginii curente
 $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-$offset = ($page - 1) * $records_per_page;
-
-// Obținerea numărului total de înregistrări
+$start = ($page - 1) * $records_per_page;
 $total_records = getTotalRecords($conn);
 $total_pages = ceil($total_records / $records_per_page);
+$solicitari = getSolicitari($conn, $start, $records_per_page);
+?>
 
-// Obținerea înregistrărilor pentru pagina curentă
-$solicitari = getSolicitari($conn, $offset, $records_per_page);
+
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 ?>
 
 <!DOCTYPE html>
@@ -46,17 +44,17 @@ $solicitari = getSolicitari($conn, $offset, $records_per_page);
     <link rel="stylesheet" type="text/css" href="css/style5.css">
 </head>
 <body>
-<div class="container mt-4">
-    <?php 
-    if (isset($_SESSION['error'])) { ?>
-        <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
-    <?php } ?>
+<div class="container list">
+       <?php 
+        if (isset($_SESSION['error'])) { ?>
+            <p class="error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
+        <?php } ?>
 
-    <?php if (isset($_SESSION['success'])) { ?>
-        <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
-    <?php } ?>
+        <?php if (isset($_SESSION['success'])) { ?>
+            <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
+        <?php } ?>
     <h1>Solicitări</h1>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Nume</th>
@@ -103,3 +101,9 @@ $solicitari = getSolicitari($conn, $offset, $records_per_page);
 </div>
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

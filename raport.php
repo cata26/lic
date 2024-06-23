@@ -1,3 +1,7 @@
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -26,3 +30,10 @@
 
 </body>
 </html>
+
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

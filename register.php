@@ -22,7 +22,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         
         <div class="form-row">
             <div class="form-group">
-
                 <input type="text" name="nr_matricol" placeholder="Număr Matricol"><br>
                 <select type="text" name="rol" placeholder="Rol*" required>
                 <option value="">Alegeti rolul</option>
@@ -35,36 +34,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
                 <input type="email" name="email" placeholder="Email*" required><br>
                 <input type="text" name="name" placeholder="Nume*" required><br>
                 <input type="text" name="an" placeholder="An"><br>
-                <input type="text" name="facultate" placeholder="Facultate"><br>
+                
                 
             </div>
 
             <div class="form-group">
-                 
-                 <input type="text" name="sectia" placeholder="Secția"><br>
-                 <input type="text" name="tip_invatamant" placeholder="Tip învățământ"><br>
-                 <input type="text" name="localitate_dom" placeholder="Localitate"><br>
-                 <input type="text" name="judet_dom" placeholder="Județ">
-                 <input type="password" name="parola" placeholder="Parola*" required><br>
-                <input type="text" name="uname" placeholder="Nume de utilizator" required><br>
-                <input type="email" name="email" placeholder="Email" required><br>
-                <input type="text" name="name" placeholder="Name" required><br>
-                <input type="text" name="an" placeholder="An"><br>
-
-                
-           </div>
-            <div class="form-group">
-             
                  <input type="text" name="facultate" placeholder="Facultate"><br>
                  <input type="text" name="sectia" placeholder="Secția"><br>
                  <input type="text" name="tip_invatamant" placeholder="Tip învățământ"><br>
                  <input type="text" name="localitate_dom" placeholder="Localitate"><br>
                  <input type="text" name="judet_dom" placeholder="Județ">
-                 <imput type="date" name="data_nasterii" placeholder="Data nașterii">
-                 <input type="password" name="parola" placeholder="Parola" required><br>
+                 <input type="password" name="parola" placeholder="Parola*" required><br>
             </div>
-
-
         </div> 
         <button type="submit">Înregistrare</button>
     </form>

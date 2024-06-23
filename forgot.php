@@ -9,7 +9,6 @@ if (isset($_GET['mode'])) {
     $mode = $_GET['mode'];
 }
 
-// something is posted
 if (count($_POST) > 0) {
     switch ($mode) {
         case 'enter_email':
@@ -68,14 +67,13 @@ if (count($_POST) > 0) {
 function send_email($email) {
     global $con;
 
-    $expire = time() + (60 * 15); // Codul expiră în 15 minute
+    $expire = time() + (60 * 15);
     $code = rand(10000, 99999);
     $email = addslashes($email);
 
     $query = "INSERT INTO codes (email, code, expire) VALUES ('$email', '$code', '$expire')";
     mysqli_query($con, $query);
 
-    // Trimite emailul cu codul de resetare
     send_mail($email, 'Resetare parola!', "Codul tau este " . $code);
 }
 

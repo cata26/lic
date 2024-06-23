@@ -1,3 +1,7 @@
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
+
 <!DOCTYPE html>
     <html lang="ro">
     <head>
@@ -17,12 +21,17 @@
             <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
         <?php } ?>  
         <h2>Publică Anunț</h2>
-            <label for="title">Titlu:</label>
+            <label>Titlu:</label>
             <input type="text" id="title" name="title" required><br><br>
-            <label for="content">Conținut:</label>
+            <label>Conținut:</label>
             <textarea id="content" name="content" required></textarea><br><br>
             <button type="submit">Publică</button>
         </form>
     </body>
     </html>
-
+    <?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

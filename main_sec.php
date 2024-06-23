@@ -23,6 +23,11 @@ if (isset($_SESSION['user_name'])) {
     exit();
 }
 ?>
+
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -63,8 +68,8 @@ if (isset($_SESSION['user_name'])) {
                 <a href="secretar.php?page=solicitari"      class="sol-button"><i class="fas fa-clipboard"></i> Solicitări</a>
                 <a href="secretar.php?page=doc_secretar"    class="doc-button"><i class="fas fa-file"></i> Documente</a>
                 <a href="secretar.php?page=form_inc"        class="incarcare-button"><i class="fas fa-upload"></i> Încarcare documente</a>
-                <a href="secretar.php?page=list_st_prof"         class="list-button"><i class="fas fa-list"></i> Listă studenți</a>
-                <a href="secretar.php?page=lista_prog"      class="prog-button"><i class="fas fa-calendar-check"></i> Progrămari</a>
+                <a href="secretar.php?page=list_st_prof"    class="list-button"><i class="fas fa-list"></i> Listă studenți</a>
+                <a href="secretar.php?page=lista_prog"           class="prog-button"><i class="fas fa-calendar-check"></i> Progrămari</a>
                 <a href="secretar.php?page=news"            class="anunuturi-button"><i class="fas fa-newspaper"></i> Anunțuri</a>
                 <a href="secretar.php?page=rec"             class="view-button"><i class="fas fa-clipboard"></i> Reclamații</a>
                 </div>
@@ -73,3 +78,10 @@ if (isset($_SESSION['user_name'])) {
     </div>
 </body>
 </html>
+
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

@@ -1,10 +1,10 @@
 <?php
 include "db_conn.php";
 
-function getStudents($conn, $offset, $records_per_page, $sort_column, $sort_direction) {
-    $sql = "SELECT nr_matricol, name, user_name, email FROM users WHERE email LIKE '%@student.upt.ro' ORDER BY $sort_column $sort_direction LIMIT ?, ?";
+function getStudents($conn, $start, $records_per_page, $sort_column, $sort_direction) {
+    $sql = "SELECT nr_matricol, name, user_name, email,facultate, sectia FROM users WHERE email LIKE '%@student.upt.ro' ORDER BY $sort_column $sort_direction LIMIT ?, ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $offset, $records_per_page);
+    $stmt->bind_param("ii", $start, $records_per_page);
     $stmt->execute();
     $result = $stmt->get_result();
     $students = [];
@@ -25,12 +25,17 @@ function getTotalRecords($conn) {
 
 $records_per_page = 10;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-$offset = ($page - 1) * $records_per_page;
+$start = ($page - 1) * $records_per_page;
 $sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'name';
 $sort_direction = isset($_GET['dir']) && $_GET['dir'] == 'desc' ? 'DESC' : 'ASC';
 $total_records = getTotalRecords($conn);
 $total_pages = ceil($total_records / $records_per_page);
-$students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_direction);
+$students = getStudents($conn, $start, $records_per_page, $sort_column, $sort_direction);
+?>
+
+<?php
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 ?>
 
 <!DOCTYPE html>
@@ -51,13 +56,15 @@ $students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_d
             <p class="success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></p>
         <?php } ?>
     <h1>Listă Studenți</h1>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Număr Matricol</a></th>
                 <th><a href="?page=list_st&p=<?php echo $page; ?>&sort=name&dir=<?php echo $sort_direction == 'ASC' ? 'desc' : 'asc'; ?>">Nume</a></th>
                 <th>Username</a></th>
                 <th>Email</></th>
+                <th>Facultate</th>
+                <th>Secția</th>
                 <th>Acțiuni</th>
             </tr>
         </thead>
@@ -70,6 +77,8 @@ $students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_d
                 echo "<td>" . htmlspecialchars($student['name']) . "</td>";
                 echo "<td>" . htmlspecialchars($student['user_name']) . "</td>";
                 echo "<td>" . htmlspecialchars($student['email']) . "</td>";
+                echo "<td>" . htmlspecialchars($student['facultate']) . "</td>";
+                echo "<td>" . htmlspecialchars($student['sectia']) . "</td>";
                 echo "<td>
                         <form method='post' action='delete.php' style='display:inline-block;'>
                             <input type='hidden' name='delete_id' value='" . htmlspecialchars($student['nr_matricol']) . "'>
@@ -111,3 +120,9 @@ $students = getStudents($conn, $offset, $records_per_page, $sort_column, $sort_d
 </div>
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

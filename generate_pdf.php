@@ -20,7 +20,7 @@ function userextraInfo($conn, $uname) {
                    an_3, an_3_medie, an_3_credite, 
                    an_4, an_4_medie, an_4_credite, 
                    an_5, an_5_medie, an_5_credite, 
-                   an_6, an_6_medie, an_6_credite,bursa,nr_semestre_bursa
+                   an_6, an_6_medie, an_6_credite, bursa, nr_semestre_bursa
             FROM medii WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uname);
@@ -103,7 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        $html_template = $document_reason === 'alta facultate' ? 'adeverinta_student2.html' : 'adeverinta_student.html';
+        $html_template = 'adeverinta_student3.html'; 
+        if ($document_reason === 'alta facultate') {
+            $html_template = 'adeverinta_student2.html';
+        } elseif ($document_reason === 'locul de munca' || $document_reason === 'alocatie europeana') {
+            $html_template = 'adeverinta_student.html';
+        }
 
         if ($userData) {
             $userGrades = userextraInfo($conn, $username);

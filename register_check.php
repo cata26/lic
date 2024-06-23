@@ -6,7 +6,6 @@ function validate($data) {
     return htmlspecialchars(stripslashes(trim($data)));
 }
 
-
 function registerUser($conn, $nr_matricol, $rol, $user_name, $email, 
 $name, $an, $facultate, $sectia, $tip_invatamant, $localitate_dom, $judet_dom, $parola) {
     
@@ -28,7 +27,9 @@ $name, $an, $facultate, $sectia, $tip_invatamant, $localitate_dom, $judet_dom, $
         an, facultate, sectia, tip_invatamant, localitate_dom, judet_dom, parola)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt2 = $conn->prepare($sql2);
-        $stmt2->bind_param("sssssissssss", $nr_matricol, $rol, $user_name, $email, $name, $an, $facultate, $sectia, $tip_invatamant, $localitate_dom, $judet_dom, $parola);
+        $stmt2->bind_param("sssssissssss", $nr_matricol, $rol, $user_name, $email, $name, 
+        $an, $facultate, $sectia, $tip_invatamant, $localitate_dom, $judet_dom, $parola);
+
         if ($stmt2->execute()) {
             $_SESSION['success'] = "Contul a fost creat cu succes!";
             return true;
@@ -40,7 +41,6 @@ $name, $an, $facultate, $sectia, $tip_invatamant, $localitate_dom, $judet_dom, $
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     if (isset($_POST['nr_matricol'], $_POST['user_name'], $_POST['email'], $_POST['name'], $_POST['an'], $_POST['facultate'], $_POST['sectia'], $_POST['tip_invatamant'], $_POST['rol'], $_POST['localitate_dom'], $_POST['judet_dom'], $_POST['parola'])) {
 
         $nr_matricol = validate($_POST['nr_matricol']);
@@ -59,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($user_name) || empty($email) || empty($name) || empty($parola)) {
             $_SESSION['error'] = "Câmpurile marcate cu steluță sunt obligatorii!";
         } else {
-
             if (registerUser($conn, $nr_matricol, $rol, $user_name, $email, $name, $an, $facultate, $sectia, $tip_invatamant, $localitate_dom, $judet_dom, $parola)) {
                 header("Location: admin.php?page=register");
                 exit();

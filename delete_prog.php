@@ -1,14 +1,12 @@
 <?php
-session_start();
-include "db_conn.php";  // Include scriptul de conectare la baza de date
-
+include "db_conn.php";  
 function deleteAppointment($conn, $data_programarii) {
-    // Pregătește declarația SQL pentru a preveni SQL injection
+    
     $sql = "DELETE FROM prog WHERE data_prog = ?";
     $stmt = $conn->prepare($sql);
     
     if ($stmt === false) {
-        return "Eroare la pregătirea interogării SQL: " . $conn->error;
+        return "Eroare la pregătirea interogării SQL: ";
     }
     
     $stmt->bind_param("s", $data_programarii);
@@ -36,4 +34,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_i'])) {
     header("Location: secretar.php?page=lista_prog");
     exit();
 }
+
 ?>

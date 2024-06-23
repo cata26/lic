@@ -1,8 +1,9 @@
 <?php
 
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 include "db_conn.php"; 
 
-function addAnnouncement($conn, $title, $content) {
+function addAnunt($conn, $title, $content) {
     $sql = "INSERT INTO news (title, content) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $title, $content);
@@ -17,13 +18,12 @@ function addAnnouncement($conn, $title, $content) {
     }
 }
 
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'];
     $content = $_POST['content'];
 
-    $result = addAnnouncement($conn, $title, $content);
+    $result = addAnunt($conn, $title, $content);
     if (strpos($result, 'succes') !== false) {
         $_SESSION['success'] = $result;
     } else {
@@ -33,4 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
+} else {
+   header("Location: index.php");
+   exit();
+}
 ?>

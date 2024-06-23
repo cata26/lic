@@ -1,3 +1,7 @@
+<?php
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -6,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/style5.css">
 </head>
 <body>
-<div class="container mt-4">
+<div class="container list">
     <h1>Adeverințe</h1>
     <table>
         <tr>
@@ -75,3 +79,10 @@
 </div>
 </body>
 </html>
+
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

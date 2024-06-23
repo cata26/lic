@@ -1,4 +1,3 @@
-
 <?php
 
 include "db_conn.php";
@@ -27,6 +26,11 @@ if (isset($_SESSION['user_name'])) {
     exit();
 }
 ?>
+
+<?php
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -78,3 +82,9 @@ if (isset($_SESSION['user_name'])) {
     </div>
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

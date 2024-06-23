@@ -3,7 +3,7 @@ session_start();
 include "db_conn.php";
 
 function saveSolicitare($conn, $username, $document_type) {
-    // Preluarea detaliilor studentului din baza de date
+    
     $sql = "SELECT name, facultate FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -14,11 +14,7 @@ function saveSolicitare($conn, $username, $document_type) {
         $row = $result->fetch_assoc();
         $name = $row['name'];
         $facultate = $row['facultate'];
-
-        // Preluarea datelor din formular
         $document_type = $conn->real_escape_string($document_type);
-
-        // Salvarea solicitării în baza de date
         $sql = "INSERT INTO solicitari (name, facultate, document_type) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $name, $facultate, $document_type);

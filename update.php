@@ -26,6 +26,10 @@ if (isset($_GET['nr_matricol'])) {
     exit();
 }
 ?>
+<?php
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
+?>
 
 <!DOCTYPE html>
 <html>
@@ -48,7 +52,6 @@ if (isset($_GET['nr_matricol'])) {
             <div class="form-group">
 
                 <input type="hidden" name="nr_matricol" value="<?php echo htmlspecialchars($row['nr_matricol']); ?>">
-
                 <input type="text" name="rol" value="<?php echo htmlspecialchars($row['rol']); ?>" placeholder="Rol"><br>
                 <input type="text" name="uname" value="<?php echo htmlspecialchars($row['user_name']); ?>" placeholder="Username"><br>
                 <input type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" placeholder="Email"><br>
@@ -60,7 +63,6 @@ if (isset($_GET['nr_matricol'])) {
             <div class="form-group">
                
                 <input type="text" name="sectia" value="<?php echo htmlspecialchars($row['sectia']); ?>" placeholder="Secția"><br>
-<
                 <input type="text" name="tip_invatamant" value="<?php echo htmlspecialchars($row['tip_invatamant']); ?>" placeholder="Tip învățământ"><br>
                 <input type="text" name="localitate_dom" value="<?php echo htmlspecialchars($row['localitate_dom']); ?>" placeholder="Localitate"><br>
                 <input type="text" name="judet_dom" value="<?php echo htmlspecialchars($row['judet_dom']); ?>" placeholder="Județ"><br>
@@ -74,3 +76,10 @@ if (isset($_GET['nr_matricol'])) {
     </form>
 </body>
 </html>
+
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}
+?>

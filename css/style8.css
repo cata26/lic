@@ -35,9 +35,9 @@ h1 {
 .announcement {
     border-bottom: 1px solid #ddd;
     padding: 20px;
-    padding-right: 100px; /* Mai mult padding pentru a face loc datei */
+    padding-right: 100px; 
     position: relative;
-    min-height: 100px; /* Asigură suficient spațiu vertical */
+    min-height: 100px; 
 }
 
 .announcement:last-child {

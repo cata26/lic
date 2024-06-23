@@ -1,7 +1,7 @@
 <?php
 include "db_conn.php";
 
-function getDocuments($dir, $offset, $records_per_page) {
+function getDocuments($dir, $start, $records_per_page) {
     $files = [];
     if (is_dir($dir)) {
         if ($dh = opendir($dir)) {
@@ -15,7 +15,7 @@ function getDocuments($dir, $offset, $records_per_page) {
     }
     $total_records = count($files);
     $total_pages = ceil($total_records / $records_per_page);
-    $files = array_slice($files, $offset, $records_per_page);
+    $files = array_slice($files, $start, $records_per_page);
 
     return [$files, $total_records, $total_pages];
 }
@@ -29,10 +29,16 @@ $username = $_SESSION['user_name'];
 
 $records_per_page = 5;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
-$offset = ($page - 1) * $records_per_page;
+$strat = ($page - 1) * $records_per_page;
 $dir = "documents/" . $username;
 
-list($documents, $total_records, $total_pages) = getDocuments($dir, $offset, $records_per_page);
+list($documents, $total_records, $total_pages) = getDocuments($dir, $start, $records_per_page);
+?>
+
+
+<?php
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
 ?>
 
 <!DOCTYPE html>
@@ -86,3 +92,8 @@ list($documents, $total_records, $total_pages) = getDocuments($dir, $offset, $re
 </div>
 </body>
 </html>
+<?php
+} else {
+   header("Location: index.php");
+   exit();
+}

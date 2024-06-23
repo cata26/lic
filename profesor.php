@@ -20,11 +20,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])) {
         <label for="toggle-dropdown" class="username">
             <?php echo $_SESSION['name']; ?>
         </label>
-       <!-- <div class="dropdown-content">
-            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> Profil</a>
-            <a href="forgot.php"><i class="fa fa-key" aria-hidden="true"></i> Resetarea parolei</a>
-            <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Delogare</a>
-        </div>-->
 </div>
 
 <nav class="sidebar">
