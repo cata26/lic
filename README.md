@@ -1,7 +1,5 @@
 # APLICAȚIE WEB PENTRU GESTIONAREA SECRETARIATULUI UPT
 
-#Instalare
-
 Pasul 1 : Se descarcă și se instalează GitHub Desktop de pe site-ul https://desktop.github.com/
 
 Pasul 2 : Se descarcă și se instalează XAMPP de pe site-ul https://www.apachefriends.org/
