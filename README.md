@@ -8,7 +8,7 @@ Pasul 3 : Se clonează repository-ul : https://github.com/cata26/lic
 
 Pasul 4 : Se descarcă și se instalează Visual Studio Code de pe site-ul https://code.visualstudio.com/
 
-Pasul 5 : Se instaleaza composer de pe site-ul https://getcomposer.org/download/
+Pasul 5 : Se descarcă instaleaza composer de pe site-ul https://getcomposer.org/download/
 
 Pasul 6 : Se instalează biblioteca TCPDF
 
